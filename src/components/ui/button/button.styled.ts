@@ -2,16 +2,16 @@ import styled, { css } from 'styled-components';
 
 const variantStyles = {
   primary: css`
-    background-color: #1da1f2;
-    color: white;
+    background-color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.primary};
     border: none;
 
     &:hover {
-      background-color: #0d8de1;
+      background-color: ${({ theme }) => theme.colors.accentHover};
     }
 
     &:disabled {
-      background-color: #a8d8f0;
+      background-color: ${({ theme }) => theme.colors.accentDisabled};
       cursor: not-allowed;
     }
   `,

@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import backgroundImage from '@/assets/images/back-twitter.jpg';
 import GoogleIcon from '@/assets/images/icons/google-icon.svg?react';
 import { Button } from '@/components/ui/button';
@@ -24,6 +26,11 @@ import {
 } from './home.styled';
 
 export const HomePage: React.FC = () => {
+  const navigate = useNavigate();
+  const onSignUpWithEmailClick = () => {
+    navigate('/sign-up');
+  };
+
   return (
     <Container>
       <ContentContainer>
@@ -42,7 +49,7 @@ export const HomePage: React.FC = () => {
               <Button variant="outline" size="large" fullWidth={true} icon={<GoogleIcon />}>
                 Sign up with Google
               </Button>
-              <Button variant="outline" size="large" fullWidth={true}>
+              <Button variant="outline" size="large" onClick={onSignUpWithEmailClick} fullWidth={true}>
                 Sign up with email
               </Button>
             </ButtonsContainer>
