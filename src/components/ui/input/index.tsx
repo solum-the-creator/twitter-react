@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { ErrorText, InputWrapper, Label, StyledInput } from './input.styled';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -6,12 +8,16 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fullWidth?: boolean;
 };
 
-export const Input: React.FC<InputProps> = ({ label, error, fullWidth, ...props }) => {
-  return (
-    <InputWrapper $fullWidth={fullWidth}>
-      {label && <Label htmlFor={props.id}>{label}</Label>}
-      <StyledInput $hasError={!!error} {...props} />
-      {error && <ErrorText>{error}</ErrorText>}
-    </InputWrapper>
-  );
-};
+export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, error, fullWidth, ...props }, ref) => {
+    return (
+      <InputWrapper $fullWidth={fullWidth}>
+        {label && <Label htmlFor={props.id}>{label}</Label>}
+        <StyledInput $hasError={!!error} ref={ref} {...props} />
+        {error && <ErrorText>{error}</ErrorText>}
+      </InputWrapper>
+    );
+  },
+);
+
+Input.displayName = 'Input';

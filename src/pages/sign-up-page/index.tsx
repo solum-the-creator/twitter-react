@@ -1,7 +1,10 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Logo } from '@/components/ui/logo';
 import { Select } from '@/components/ui/select';
+import { useRegisterMutation } from '@/store/auth/authApi';
 
 import {
   Container,
@@ -15,17 +18,41 @@ import {
   SignUpForm,
 } from './sign-up.styled';
 
+type FormData = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export const SignUpPage: React.FC = () => {
+  const { register, handleSubmit } = useForm<FormData>();
+  const [registerUser, { isLoading, isError, isSuccess, error }] = useRegisterMutation();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      await registerUser({ email: data.email, password: data.password }).unwrap();
+      alert('Registration successful!');
+    } catch (err) {
+      alert('Registration failed.');
+    }
+  };
+
   return (
     <Container>
       <Section>
         <Logo />
-        <SignUpForm>
+        <SignUpForm onSubmit={handleSubmit(onSubmit)}>
           <FormTitle>Create an account</FormTitle>
           <InputGroup>
-            <Input type="text" required={true} placeholder="Name" fullWidth={true} />
-            <Input type="email" required={true} placeholder="Email" fullWidth={true} />
-            <Input type="password" required={true} placeholder="Password" fullWidth={true} />
+            <Input type="text" required={true} placeholder="Name" fullWidth={true} {...register('name')} />
+            <Input type="email" required={true} placeholder="Email" fullWidth={true} {...register('email')} />
+            <Input
+              type="password"
+              required={true}
+              placeholder="Password"
+              fullWidth={true}
+              {...register('password')}
+            />
           </InputGroup>
           <DateOfBirthGroup>
             <DateOfBirthTitle>Date of Birth</DateOfBirthTitle>
@@ -69,8 +96,10 @@ export const SignUpPage: React.FC = () => {
             </SelectGroup>
           </DateOfBirthGroup>
           <Button type="submit" variant="primary" size="large" fullWidth={true}>
-            Sign Up
+            {isLoading ? 'Loading...' : 'Sign Up'}
           </Button>
+          {isError && <p style={{ color: 'red' }}>Registration failed: {error?.toString()}</p>}
+          {isSuccess && <p style={{ color: 'green' }}>User registered successfully!</p>}
         </SignUpForm>
       </Section>
     </Container>
