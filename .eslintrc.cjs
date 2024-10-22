@@ -67,6 +67,7 @@ module.exports = {
     'react/prop-types': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-nested-ternary': 'off',
+    'no-param-reassign': 'off',
     'no-plusplus': 'off',
     'no-empty': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
