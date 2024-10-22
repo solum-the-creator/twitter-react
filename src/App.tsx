@@ -1,19 +1,14 @@
-import { LoginForm } from '@/components/login-form';
-import { LogoutButton } from '@/components/logout-button';
-import { RegisterForm } from '@/components/register-form';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { HomePage } from '@/pages/home-page';
 
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>Register</h1>
-      <RegisterForm />
-
-      <h1>Login</h1>
-      <LoginForm />
-
-      <h1>Logout</h1>
-      <LogoutButton />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

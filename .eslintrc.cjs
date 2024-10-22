@@ -72,5 +72,6 @@ module.exports = {
     'no-empty': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'react/jsx-props-no-spreading': 'off',
+    'react/button-has-type': 'off',
   },
 };

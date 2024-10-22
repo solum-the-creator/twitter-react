@@ -32,7 +32,8 @@
       "@/firebase/*": ["./src/firebase/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/types/*": ["./src/types/*"],
-      "@/utils/*": ["./src/utils/*"]
+      "@/utils/*": ["./src/utils/*"],
+      "@/constants/*": ["./src/constants/*"]
     }
   },
   "include": ["src"],
