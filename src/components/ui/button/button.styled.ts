@@ -58,8 +58,8 @@ const sizeStyles = {
     border-radius: 6px;
   `,
   large: css`
-    padding: 1.5rem 2rem;
-    font-size: 1.5rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.3rem;
     font-weight: 500;
     border-radius: 2.6rem;
   `,
