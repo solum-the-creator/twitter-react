@@ -4,11 +4,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { authApi } from '@/store/auth/authApi';
 import authSLice from '@/store/auth/authSlice';
+import notificationSlice from '@/store/notification/notificationSlice';
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     auth: authSLice,
+    notification: notificationSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware),
 });

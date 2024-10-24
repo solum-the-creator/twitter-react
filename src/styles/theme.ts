@@ -13,7 +13,29 @@ export const theme = {
     strokeDark: '#00000066',
     error: '#F21D1D',
     errorText: '#F21D1D',
+    success: '#4CAF50',
+    successText: '#4CAF50',
     placeholder: '#666666',
+  },
+  notification: {
+    backgroundColor: {
+      error: '#F21D1D',
+      success: '#4CAF50',
+      info: '#2196F3',
+      warning: '#FFC107',
+    },
+    color: {
+      error: '#F21D1D',
+      success: '#4CAF50',
+      info: '#2196F3',
+      warning: '#FFC107',
+    },
+    shadow: {
+      error: '#F21D1D',
+      success: '#4CAF50',
+      info: '#2196F3',
+      warning: '#FFC107',
+    },
   },
 };
 

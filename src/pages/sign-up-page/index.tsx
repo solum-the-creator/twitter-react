@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Logo } from '@/components/ui/logo';
 import { Select } from '@/components/ui/select';
 import { useRegisterMutation } from '@/store/auth/authApi';
+import { useAppDispatch } from '@/store/index';
+import { addNotification } from '@/store/notification/notificationSlice';
 import { SignUpFormData } from '@/types/user';
 import { getDayOptions, getMonthOptions, getYearOptions } from '@/utils/date-utils';
 
@@ -31,6 +33,8 @@ export const SignUpPage: React.FC = () => {
     formState: { errors },
   } = useForm<SignUpFormData>({ resolver: yupResolver(signUpValidationScheme) });
   const [registerUser, { isLoading }] = useRegisterMutation();
+
+  const dispatch = useAppDispatch();
 
   const [month, setMonth] = useState<number>();
   const [year, setYear] = useState<number>();
@@ -63,7 +67,8 @@ export const SignUpPage: React.FC = () => {
         },
       }).unwrap();
     } catch (err) {
-      alert('Registration failed.');
+      const errorMessage = (err as { message: string }).message || 'An unexpected error occurred';
+      dispatch(addNotification({ type: 'error', message: errorMessage }));
     }
   };
 
@@ -136,7 +141,7 @@ export const SignUpPage: React.FC = () => {
               <Select
                 fullWidth={true}
                 placeholder="Year"
-                options={getYearOptions(1900, new Date().getFullYear())}
+                options={getYearOptions(1900, new Date().getFullYear()).reverse()}
                 {...register('year')}
                 onChange={handleYearChange}
                 error={errors.year?.message}

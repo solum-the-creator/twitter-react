@@ -2,6 +2,7 @@ import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { loginWithEmail, logout, registerWithEmail } from '@/firebase/firebase-utils';
 import { LoginRequest, LoginResponse, SignUpWithEmailData } from '@/types/user';
+import { getFirebaseErrorMessage, isFirebaseError } from '@/utils/errors-utils';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -14,7 +15,12 @@ export const authApi = createApi({
 
           return { data: undefined };
         } catch (error) {
-          return { error };
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred during registration.' } };
         }
       },
     }),

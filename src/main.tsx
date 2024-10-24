@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '@/styles/global';
 import { theme } from '@/styles/theme';
 
+import { ToastList } from './components/toast/toast-list';
 import App from './App';
 import { store } from './store';
 
@@ -18,6 +19,7 @@ root.render(
       <GlobalStyles />
       <ThemeProvider theme={theme}>
         <App />
+        <ToastList />
       </ThemeProvider>
     </Provider>
   </StrictMode>,
