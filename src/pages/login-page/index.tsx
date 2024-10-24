@@ -7,6 +7,8 @@ import { Link } from '@/components/ui/link';
 import { Logo } from '@/components/ui/logo';
 import { paths } from '@/constants/paths';
 import { useLoginMutation } from '@/store/auth/authApi';
+import { useAppDispatch } from '@/store/index';
+import { addNotification } from '@/store/notification/notificationSlice';
 import { LoginFormData } from '@/types/user';
 
 import {
@@ -21,6 +23,7 @@ import {
 import { loginValidationScheme } from './login-scheme';
 
 export const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -33,7 +36,8 @@ export const LoginPage = () => {
     try {
       await loginUser(data).unwrap();
     } catch (err) {
-      alert('Login failed.');
+      const errorMessage = (err as { message: string }).message || 'An unexpected error occurred';
+      dispatch(addNotification({ type: 'error', message: errorMessage }));
     }
   };
 

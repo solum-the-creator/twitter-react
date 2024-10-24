@@ -33,7 +33,12 @@ export const authApi = createApi({
 
           return { data: { uid: user.uid, email: user.email! } };
         } catch (error) {
-          return { error };
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred during login.' } };
         }
       },
     }),
