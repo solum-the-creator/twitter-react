@@ -81,7 +81,6 @@ export const SignUpPage: React.FC = () => {
           <InputGroup>
             <Input
               type="text"
-              required={true}
               placeholder="Name"
               fullWidth={true}
               {...register('name')}
@@ -89,7 +88,6 @@ export const SignUpPage: React.FC = () => {
             />
             <Input
               type="phone"
-              required={true}
               placeholder="Phone number"
               fullWidth={true}
               {...register('phone')}
@@ -97,7 +95,6 @@ export const SignUpPage: React.FC = () => {
             />
             <Input
               type="email"
-              required={true}
               placeholder="Email"
               fullWidth={true}
               {...register('email')}
@@ -106,7 +103,6 @@ export const SignUpPage: React.FC = () => {
 
             <Input
               type="password"
-              required={true}
               placeholder="Password"
               fullWidth={true}
               {...register('password')}

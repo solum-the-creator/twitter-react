@@ -20,6 +20,11 @@ export type SignUpWithEmailData = {
   profile: Omit<UserProfile, 'email'>;
 };
 
+export type LoginFormData = {
+  email: string;
+  password: string;
+};
+
 export type LoginRequest = {
   email: string;
   password: string;
