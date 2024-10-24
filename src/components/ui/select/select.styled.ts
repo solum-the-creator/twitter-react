@@ -6,7 +6,7 @@ export const SelectWrapper = styled.div<{ $fullWidth?: boolean }>`
   display: flex;
   flex-direction: column;
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const StyledSelect = styled.select<{ $hasError: boolean }>`
@@ -44,8 +44,11 @@ export const Label = styled.label`
   color: #333;
 `;
 
-export const ErrorText = styled.span`
+export const ErrorText = styled.span<{ $hasError: boolean }>`
   color: red;
   font-size: 0.8rem;
   margin-top: 0.25rem;
+  height: 1rem;
+
+  visibility: ${({ $hasError }) => ($hasError ? 'visible' : 'hidden')};
 `;

@@ -14,7 +14,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
       <InputWrapper $fullWidth={fullWidth}>
         {label && <Label htmlFor={props.id}>{label}</Label>}
         <StyledInput $hasError={!!error} ref={ref} {...props} />
-        {error && <ErrorText>{error}</ErrorText>}
+        <ErrorText $hasError={!!error}>{error}</ErrorText>
       </InputWrapper>
     );
   },

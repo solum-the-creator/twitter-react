@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,13 +21,33 @@ import {
   SelectGroup,
   SignUpForm,
 } from './sign-up.styled';
+import { signUpValidationScheme } from './sign-up-scheme';
 
 export const SignUpPage: React.FC = () => {
-  const { control, register, handleSubmit } = useForm<SignUpFormData>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<SignUpFormData>({ resolver: yupResolver(signUpValidationScheme) });
   const [registerUser, { isLoading }] = useRegisterMutation();
 
   const [month, setMonth] = useState<number>();
   const [year, setYear] = useState<number>();
+
+  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedMonth = Number(e.target.value);
+    setMonth(selectedMonth);
+    setValue('month', selectedMonth);
+    register('month').onChange(e);
+  };
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedYear = Number(e.target.value);
+    setYear(selectedYear);
+    setValue('year', selectedYear);
+    register('year').onChange(e);
+  };
 
   const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
     const dateOfBirth = new Date(data.year, data.month, data.day);
@@ -41,18 +62,9 @@ export const SignUpPage: React.FC = () => {
           phone: data.phone,
         },
       }).unwrap();
-      alert('Registration successful!');
     } catch (err) {
       alert('Registration failed.');
     }
-  };
-
-  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMonth(Number(e.target.value));
-  };
-
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setYear(Number(e.target.value));
   };
 
   return (
@@ -62,15 +74,30 @@ export const SignUpPage: React.FC = () => {
         <SignUpForm onSubmit={handleSubmit(onSubmit)}>
           <FormTitle>Create an account</FormTitle>
           <InputGroup>
-            <Input type="text" required={true} placeholder="Name" fullWidth={true} {...register('name')} />
+            <Input
+              type="text"
+              required={true}
+              placeholder="Name"
+              fullWidth={true}
+              {...register('name')}
+              error={errors.name?.message}
+            />
             <Input
               type="phone"
               required={true}
               placeholder="Phone number"
               fullWidth={true}
               {...register('phone')}
+              error={errors.phone?.message}
             />
-            <Input type="email" required={true} placeholder="Email" fullWidth={true} {...register('email')} />
+            <Input
+              type="email"
+              required={true}
+              placeholder="Email"
+              fullWidth={true}
+              {...register('email')}
+              error={errors.email?.message}
+            />
 
             <Input
               type="password"
@@ -78,6 +105,7 @@ export const SignUpPage: React.FC = () => {
               placeholder="Password"
               fullWidth={true}
               {...register('password')}
+              error={errors.password?.message}
             />
           </InputGroup>
           <DateOfBirthGroup>
@@ -88,38 +116,30 @@ export const SignUpPage: React.FC = () => {
               viverra dignissim eget tellus. Nibh mi massa in molestie a sit. Elit congue.
             </DateOfBirthText>
             <SelectGroup>
-              <Controller
-                name="month"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    fullWidth={true}
-                    options={getMonthOptions()}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleMonthChange(e);
-                    }}
-                  />
-                )}
+              <Select
+                fullWidth={true}
+                placeholder="Month"
+                options={getMonthOptions()}
+                {...register('month')}
+                onChange={handleMonthChange}
+                error={errors.month?.message}
               />
 
-              <Select fullWidth={true} options={getDayOptions(month || 0, year || 0)} {...register('day')} />
+              <Select
+                fullWidth={true}
+                placeholder="Day"
+                options={getDayOptions(month || 0, year || 0)}
+                {...register('day')}
+                error={errors.day?.message}
+              />
 
-              <Controller
-                name="year"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    fullWidth={true}
-                    options={getYearOptions(1900, new Date().getFullYear())}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleYearChange(e);
-                    }}
-                  />
-                )}
+              <Select
+                fullWidth={true}
+                placeholder="Year"
+                options={getYearOptions(1900, new Date().getFullYear())}
+                {...register('year')}
+                onChange={handleYearChange}
+                error={errors.year?.message}
               />
             </SelectGroup>
           </DateOfBirthGroup>
