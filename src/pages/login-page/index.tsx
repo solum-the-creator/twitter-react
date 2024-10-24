@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link } from '@/components/ui/link';
 import { Logo } from '@/components/ui/logo';
+import { paths } from '@/constants/paths';
 import { useLoginMutation } from '@/store/auth/authApi';
 
 import {
@@ -32,7 +33,6 @@ export const LoginPage = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       await loginUser(data).unwrap();
-      alert('Login successful!');
     } catch (err) {
       alert('Login failed.');
     }
@@ -68,7 +68,7 @@ export const LoginPage = () => {
             </Button>
           </ControlGroup>
           <SignUpLintWrapper>
-            <Link to="/sign-up">Sign up to Twitter</Link>
+            <Link to={paths.signUp}>Sign up to Twitter</Link>
           </SignUpLintWrapper>
           {isError && <p style={{ color: 'red' }}>Login failed: {error?.toString()}</p>}
           {isSuccess && <p style={{ color: 'green' }}>User logged in successfully!</p>}

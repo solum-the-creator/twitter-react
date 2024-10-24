@@ -1,36 +1,41 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { loginWithEmail, logout, registerWithEmail } from '@/firebase/firebase-utils';
+import { LoginRequest, LoginResponse, SignUpWithEmailData } from '@/types/user';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
-    register: builder.mutation({
-      queryFn: async ({ email, password }) => {
+    register: builder.mutation<void, SignUpWithEmailData>({
+      queryFn: async ({ email, password, profile }) => {
         try {
-          const user = await registerWithEmail(email, password);
-          return { data: user };
+          await registerWithEmail({ email, password, profile });
+
+          return { data: undefined };
         } catch (error) {
           return { error };
         }
       },
     }),
-    login: builder.mutation({
+    login: builder.mutation<LoginResponse, LoginRequest>({
       queryFn: async ({ email, password }) => {
         try {
-          const user = await loginWithEmail(email, password);
-          return { data: user };
+          const userCredentials = await loginWithEmail(email, password);
+
+          const { user } = userCredentials;
+
+          return { data: { uid: user.uid, email: user.email! } };
         } catch (error) {
           return { error };
         }
       },
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<void, void>({
       queryFn: async () => {
         try {
           await logout();
-          return { data: true };
+          return { data: undefined };
         } catch (error) {
           return { error };
         }

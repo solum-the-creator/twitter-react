@@ -19,6 +19,7 @@ export default defineConfig({
       '@/firebase': path.resolve(__dirname, 'src/firebase'),
       '@/components': path.resolve(__dirname, 'src/components'),
       '@/constants': path.resolve(__dirname, 'src/constants'),
+      '@/': path.resolve(__dirname, 'src'),
     },
   },
 });

@@ -17,3 +17,9 @@ export const footerLinks = [
   { label: 'Settings', href: '/settings' },
   { label: '© 2024 Twitter, Inc.', href: '/copyright' },
 ];
+
+export const privacyLinks = {
+  terms: 'https://twitter.com/en/tos',
+  privacy: 'https://twitter.com/en/privacy',
+  cookies: 'https://twitter.com/en/cookies',
+};
