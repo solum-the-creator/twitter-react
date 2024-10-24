@@ -1,9 +1,31 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+} from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
-import { auth } from './config';
+import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
-export const registerWithEmail = async (email: string, password: string): Promise<UserCredential> => {
-  return createUserWithEmailAndPassword(auth, email, password);
+import { auth, db } from './config';
+
+export const registerWithEmail = async ({
+  email,
+  password,
+  profile,
+}: SignUpWithEmailData): Promise<UserCredential> => {
+  const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+  const { user } = userCredentials;
+
+  const userProfile: UserProfile = {
+    email: user.email!,
+    ...profile,
+  };
+
+  await setDoc(doc(db, 'users', user.uid), userProfile);
+
+  return userCredentials;
 };
 
 export const loginWithEmail = async (email: string, password: string): Promise<UserCredential> => {

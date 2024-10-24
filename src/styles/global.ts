@@ -31,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
         border: none;
         background-color: transparent;
         cursor: pointer;
-        font-family: "Open Sans", sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-size: 14px;
     }
 `;

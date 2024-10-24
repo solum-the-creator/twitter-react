@@ -2,10 +2,11 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint()],
+  plugins: [react(), svgr(), eslint()],
   resolve: {
     alias: {
       '@/assets': path.resolve(__dirname, 'src/assets'),
@@ -17,6 +18,8 @@ export default defineConfig({
       '@/types': path.resolve(__dirname, 'src/types'),
       '@/firebase': path.resolve(__dirname, 'src/firebase'),
       '@/components': path.resolve(__dirname, 'src/components'),
+      '@/constants': path.resolve(__dirname, 'src/constants'),
+      '@/': path.resolve(__dirname, 'src'),
     },
   },
 });
