@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   UserCredential,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -17,6 +18,10 @@ export const registerWithEmail = async ({
 }: SignUpWithEmailData): Promise<UserCredential> => {
   const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
   const { user } = userCredentials;
+
+  await updateProfile(user, {
+    displayName: profile.name,
+  });
 
   const userProfile: UserProfile = {
     email: user.email!,

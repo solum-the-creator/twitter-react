@@ -7,7 +7,7 @@ const variantStyles = {
     border: none;
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors.accentHover};
+      background-color: ${({ theme }) => theme.colors.accentActive};
     }
 
     &:disabled {
@@ -16,12 +16,12 @@ const variantStyles = {
     }
   `,
   secondary: css`
-    background-color: #eff3f4;
+    background-color: ${({ theme }) => theme.colors.backgroundGray};
     color: #0f1419;
     border: none;
 
     &:hover {
-      background-color: #d4dadd;
+      background-color: ${({ theme }) => theme.colors.backgroundGrayDark};
     }
 
     &:disabled {
@@ -53,9 +53,9 @@ const sizeStyles = {
     border-radius: 4px;
   `,
   medium: css`
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 1.75rem;
   `,
   large: css`
     padding: 1.2rem 1.6rem;

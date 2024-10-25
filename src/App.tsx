@@ -8,7 +8,9 @@ import { LoginPage } from '@/pages/login-page';
 import { RootPage } from '@/pages/root-page';
 import { SignUpPage } from '@/pages/sign-up-page';
 
+import { MainLayout } from './components/layout/main-layout';
 import { paths } from './constants/paths';
+import { ProfilePage } from './pages/profile-page';
 
 const App: React.FC = () => {
   useAuthListener();
@@ -17,7 +19,10 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<AuthRoute />}>
-          <Route path={paths.home} element={<HomePage />} />
+          <Route element={<MainLayout />}>
+            <Route path={paths.home} element={<HomePage />} />
+            <Route path={paths.profile} element={<ProfilePage />} />
+          </Route>
         </Route>
         <Route element={<UnauthRoute />}>
           <Route path={paths.signUp} element={<SignUpPage />} />

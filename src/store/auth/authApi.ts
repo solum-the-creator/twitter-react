@@ -48,7 +48,12 @@ export const authApi = createApi({
           await logout();
           return { data: undefined };
         } catch (error) {
-          return { error };
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred during logout.' } };
         }
       },
     }),
