@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Logo } from '@/components/ui/logo';
 import { Select } from '@/components/ui/select';
+import { paths } from '@/constants/paths';
 import { useRegisterMutation } from '@/store/auth/authApi';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
@@ -75,7 +77,9 @@ export const SignUpPage: React.FC = () => {
   return (
     <Container>
       <Section>
-        <Logo />
+        <Link to={paths.root}>
+          <Logo />
+        </Link>
         <SignUpForm onSubmit={handleSubmit(onSubmit)}>
           <FormTitle>Create an account</FormTitle>
           <InputGroup>

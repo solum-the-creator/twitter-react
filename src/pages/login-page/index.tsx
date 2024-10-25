@@ -45,7 +45,9 @@ export const LoginPage = () => {
     <Container>
       <Section>
         <LogoWrapper>
-          <Logo />
+          <Link to={paths.root}>
+            <Logo />
+          </Link>
         </LogoWrapper>
         <LoginForm onSubmit={handleSubmit(onSubmit)}>
           <FormTitle>Log in to Twitter</FormTitle>
