@@ -5,7 +5,7 @@ import {
   updateProfile,
   UserCredential,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
@@ -39,4 +39,14 @@ export const loginWithEmail = async (email: string, password: string): Promise<U
 
 export const logout = async (): Promise<void> => {
   return signOut(auth);
+};
+
+export const fetchUserProfile = async (uid: string): Promise<UserProfile | null> => {
+  const docRef = doc(db, 'users', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data() as UserProfile;
+  }
+  return null;
 };

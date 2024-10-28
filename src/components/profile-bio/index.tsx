@@ -16,12 +16,19 @@ import {
   UserName,
 } from './profile.styled';
 
-export const ProfileBio: React.FC = () => {
+type ProfileBioProps = {
+  name: string;
+  email: string;
+  bio?: string;
+  profileImage?: string;
+};
+
+export const ProfileBio: React.FC<ProfileBioProps> = ({ name, email, bio, profileImage }) => {
   return (
     <Container>
       <TopBio>
         <ProfileImageWrapper>
-          <ProfileImage src={testProfile} alt="Profile image" />
+          <ProfileImage src={profileImage || testProfile} alt={`${name} image`} />
         </ProfileImageWrapper>
         <ActionsWrapper>
           <Button variant="outline" size="small">
@@ -30,9 +37,9 @@ export const ProfileBio: React.FC = () => {
         </ActionsWrapper>
       </TopBio>
       <Details>
-        <UserName>Username</UserName>
-        <Email>Email@email.com</Email>
-        <Bio>UX&UI designer at @abutechuz</Bio>
+        <UserName>{name}</UserName>
+        <Email>{email}</Email>
+        <Bio>{bio}</Bio>
         <Follows>
           <div>
             <FollowsCount>5</FollowsCount> Following

@@ -3,8 +3,8 @@ export type UserProfile = {
   email: string;
   phone: string;
   dateOfBirth: string;
-  description?: string;
-  telegramLink?: string;
+  bio?: string;
+  profileImage?: string;
 };
 
 export type SignUpFormData = Pick<UserProfile, 'name' | 'email' | 'phone'> & {

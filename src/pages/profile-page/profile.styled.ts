@@ -9,7 +9,7 @@ export const ProfileContainer = styled.div`
 export const HeaderInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.4rem;
 `;
