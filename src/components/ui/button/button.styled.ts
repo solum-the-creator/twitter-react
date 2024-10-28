@@ -48,9 +48,9 @@ const variantStyles = {
 
 const sizeStyles = {
   small: css`
-    padding: 4px 8px;
-    font-size: 12px;
-    border-radius: 4px;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    border-radius: 1.5rem;
   `,
   medium: css`
     padding: 1rem 1.5rem;

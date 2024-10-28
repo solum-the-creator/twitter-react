@@ -8,6 +8,7 @@ export const SidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 2rem;
   height: 100vh;
 
   @media screen and (max-width: 768px) {
