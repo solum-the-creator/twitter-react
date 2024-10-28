@@ -19,6 +19,7 @@ export const theme = {
     success: '#4CAF50',
     successText: '#4CAF50',
     placeholder: '#666666',
+    backdrop: '#5B708366',
   },
   notification: {
     backgroundColor: {
