@@ -1,6 +1,6 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { loginWithEmail, logout, registerWithEmail } from '@/firebase/firebase-utils';
+import { loginWithEmail, loginWithGoogle, logout, registerWithEmail } from '@/firebase/firebase-utils';
 import { LoginRequest, LoginResponse, SignUpWithEmailData } from '@/types/user';
 import { getFirebaseErrorMessage, isFirebaseError } from '@/utils/errors-utils';
 
@@ -42,6 +42,23 @@ export const authApi = createApi({
         }
       },
     }),
+    loginWithGoogle: builder.mutation<LoginResponse, void>({
+      queryFn: async () => {
+        try {
+          const userCredentials = await loginWithGoogle();
+          const { user } = userCredentials;
+
+          return { data: { uid: user.uid, email: user.email! } };
+        } catch (error) {
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred during Google login.' } };
+        }
+      },
+    }),
     logout: builder.mutation<void, void>({
       queryFn: async () => {
         try {
@@ -60,4 +77,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLogoutMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation, useLoginWithGoogleMutation } =
+  authApi;

@@ -7,6 +7,9 @@ import { Link } from '@/components/ui/link';
 import { Logo } from '@/components/ui/logo';
 import { footerLinks, privacyLinks } from '@/constants/links';
 import { paths } from '@/constants/paths';
+import { useLoginWithGoogleMutation } from '@/store/auth/authApi';
+import { useAppDispatch } from '@/store/index';
+import { addNotification } from '@/store/notification/notificationSlice';
 
 import {
   AgreementText,
@@ -27,9 +30,21 @@ import {
 } from './root.styled';
 
 export const RootPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const [loginWithGoogle] = useLoginWithGoogleMutation();
+
   const navigate = useNavigate();
   const onSignUpWithEmailClick = () => {
     navigate('/sign-up');
+  };
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      await loginWithGoogle().unwrap();
+    } catch (error) {
+      const errorMessage = (error as { message: string }).message || 'An unexpected error occurred';
+      dispatch(addNotification({ type: 'error', message: errorMessage }));
+    }
   };
 
   return (
@@ -47,7 +62,12 @@ export const RootPage: React.FC = () => {
             <Subtitle>Join Twitter today</Subtitle>
 
             <ButtonsContainer>
-              <Button variant="outline" size="large" fullWidth={true} icon={<GoogleIcon />}>
+              <Button
+                onClick={handleLoginWithGoogle}
+                variant="outline"
+                size="large"
+                fullWidth={true}
+                icon={<GoogleIcon />}>
                 Sign up with Google
               </Button>
               <Button variant="outline" size="large" onClick={onSignUpWithEmailClick} fullWidth={true}>

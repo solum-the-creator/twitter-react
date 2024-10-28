@@ -1,6 +1,8 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
   UserCredential,
@@ -49,4 +51,28 @@ export const fetchUserProfile = async (uid: string): Promise<UserProfile | null>
     return docSnap.data() as UserProfile;
   }
   return null;
+};
+
+export const loginWithGoogle = async (): Promise<UserCredential> => {
+  const googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters({ prompt: 'select_account' });
+  const userCredentials = await signInWithPopup(auth, googleProvider);
+
+  const { user } = userCredentials;
+
+  const userDocRef = doc(db, 'users', user.uid);
+  const userDoc = await getDoc(userDocRef);
+
+  if (!userDoc.exists()) {
+    const userProfile: UserProfile = {
+      email: user.email!,
+      phone: user.phoneNumber || '',
+      name: user.displayName || '',
+      profileImage: user.photoURL || '',
+    };
+
+    await setDoc(userDocRef, userProfile);
+  }
+
+  return userCredentials;
 };
