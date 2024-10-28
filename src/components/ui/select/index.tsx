@@ -32,3 +32,5 @@ export const Select: React.FC<SelectProps> = forwardRef<HTMLSelectElement, Selec
     );
   },
 );
+
+Select.displayName = 'Select';

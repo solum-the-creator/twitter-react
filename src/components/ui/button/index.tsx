@@ -1,11 +1,13 @@
+import { ButtonVariant, Size } from '@/types/types';
+
 import { IconSpan, StyledButton } from './button.styled';
 
 type ButtonProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'small' | 'medium' | 'large';
+  variant?: ButtonVariant;
+  size?: Size;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   fullWidth?: boolean;

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { ButtonVariant, Size } from '@/types/types';
+
 const variantStyles = {
   primary: css`
     background-color: ${({ theme }) => theme.colors.accent};
@@ -66,8 +68,8 @@ const sizeStyles = {
 };
 
 export const StyledButton = styled.button<{
-  $variant: 'primary' | 'secondary' | 'outline';
-  $size: 'small' | 'medium' | 'large';
+  $variant: ButtonVariant;
+  $size: Size;
   $fullWidth: boolean;
 }>`
   display: inline-flex;

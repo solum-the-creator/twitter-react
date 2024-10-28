@@ -13,13 +13,8 @@ export const ToastList: React.FC = () => {
   return createPortal(
     <ToastListWrapper>
       <List>
-        {notifications.map((notification) => (
-          <ToastItem
-            key={notification.id}
-            id={notification.id}
-            message={notification.message}
-            type={notification.type}
-          />
+        {notifications.map(({ id, message, type }) => (
+          <ToastItem key={id} id={id} message={message} type={type} />
         ))}
       </List>
     </ToastListWrapper>,

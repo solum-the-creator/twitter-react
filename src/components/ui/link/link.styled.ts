@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { LinkProps } from './link.type';
+import { LinkVariant } from '@/types/types';
 
 const variantStyles = {
   primary: css`
@@ -34,7 +34,7 @@ const variantStyles = {
   `,
 };
 
-export const StyledLink = styled(RouterLink)<Pick<LinkProps, 'variant'>>`
+export const StyledLink = styled(RouterLink)<{ variant?: LinkVariant }>`
   ${({ variant }) => variantStyles[variant || 'primary']}
   cursor: pointer;
 `;
