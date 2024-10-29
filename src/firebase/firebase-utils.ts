@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateProfile,
+  updatePassword,
   UserCredential,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
@@ -73,14 +73,22 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
   return userCredentials;
 };
 
-export const updateUserProfile = async (uid: string, profileData: Partial<UserProfile>): Promise<void> => {
+export const updateUserProfile = async (
+  uid: string,
+  profileData: Partial<UserProfile>,
+  newPassword?: string | null,
+): Promise<void> => {
   const userDocRef = doc(db, 'users', uid);
 
   await updateDoc(userDocRef, profileData);
 
-  if (profileData.name && auth.currentUser) {
-    await updateProfile(auth.currentUser, {
-      displayName: profileData.name,
-    });
+  if (newPassword) {
+    const { currentUser } = auth;
+
+    if (currentUser) {
+      await updatePassword(currentUser, newPassword);
+    } else {
+      throw new Error('User not authenticated');
+    }
   }
 };

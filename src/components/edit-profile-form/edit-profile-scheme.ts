@@ -7,6 +7,14 @@ export const editProfileValidationSchema: yup.ObjectSchema<EditProfileFormData> 
   name: validationRules.name,
   bio: validationRules.bio,
   telegramLink: validationRules.telegramLink,
-  password: validationRules.password,
-  confirmPassword: validationRules.confirmPassword,
+  password: yup
+    .string()
+    .nullable()
+    .test('is-valid-password', 'Password must be at least 6 characters', (value) => {
+      return !value || value.length >= 6;
+    }),
+  confirmPassword: yup
+    .string()
+    .nullable()
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });

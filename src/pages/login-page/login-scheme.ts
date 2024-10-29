@@ -5,5 +5,5 @@ import { LoginFormData } from '@/types/user';
 
 export const loginValidationScheme: yup.ObjectSchema<LoginFormData> = yup.object().shape({
   email: validationRules.email,
-  password: validationRules.password,
+  password: validationRules.password.required('Password is required'),
 });

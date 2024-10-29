@@ -7,7 +7,7 @@ export const signUpValidationScheme: yup.ObjectSchema<SignUpFormData> = yup.obje
   name: validationRules.name,
   phone: validationRules.phone,
   email: validationRules.email,
-  password: validationRules.password,
+  password: validationRules.password.required('Password is required'),
   day: validationRules.day,
   month: validationRules.month,
   year: validationRules.year,

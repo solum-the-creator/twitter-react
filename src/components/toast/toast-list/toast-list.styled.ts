@@ -6,7 +6,7 @@ export const ToastListWrapper = styled.div`
   right: 1rem;
   display: flex;
   align-items: center;
-  z-index: 10;
+  z-index: 11;
 `;
 
 export const List = styled.div`

@@ -1,7 +1,7 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { fetchUserProfile, updateUserProfile } from '@/firebase/firebase-utils';
-import { UserProfile } from '@/types/user';
+import { UpdateProfileRequest, UserProfile } from '@/types/user';
 import { getFirebaseErrorMessage, isFirebaseError } from '@/utils/errors-utils';
 
 export const profileApi = createApi({
@@ -28,10 +28,10 @@ export const profileApi = createApi({
       },
       providesTags: (_, _error, uid) => [{ type: 'UserProfile', id: uid }],
     }),
-    updateProfile: builder.mutation<void, { uid: string; profileData: Partial<UserProfile> }>({
-      queryFn: async ({ uid, profileData }) => {
+    updateProfile: builder.mutation<void, UpdateProfileRequest>({
+      queryFn: async ({ uid, profileData, newPassword }) => {
         try {
-          await updateUserProfile(uid, profileData);
+          await updateUserProfile(uid, profileData, newPassword);
           return { data: undefined };
         } catch (error) {
           if (isFirebaseError(error)) {

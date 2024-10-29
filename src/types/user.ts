@@ -21,6 +21,12 @@ export type SignUpWithEmailData = {
   profile: Omit<UserProfile, 'email'>;
 };
 
+export type UpdateProfileRequest = {
+  uid: string;
+  profileData: Partial<UserProfile>;
+  newPassword?: string | null;
+};
+
 export type LoginFormData = {
   email: string;
   password: string;
@@ -40,6 +46,6 @@ export type EditProfileFormData = {
   name: string;
   bio?: string;
   telegramLink?: string;
-  password?: string;
-  confirmPassword?: string;
+  password?: string | null;
+  confirmPassword?: string | null;
 };

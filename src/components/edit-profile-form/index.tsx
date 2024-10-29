@@ -42,6 +42,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           bio: data.bio,
           telegramLink: data.telegramLink,
         },
+        newPassword: data.password,
       }).unwrap();
 
       onSuccess?.();
