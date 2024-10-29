@@ -4,6 +4,7 @@ export type UserProfile = {
   phone?: string;
   dateOfBirth?: string;
   bio?: string;
+  telegramLink?: string;
   profileImage?: string;
 };
 
@@ -33,4 +34,12 @@ export type LoginRequest = {
 export type LoginResponse = {
   uid: string;
   email: string;
+};
+
+export type EditProfileFormData = {
+  name: string;
+  bio?: string;
+  telegramLink?: string;
+  password?: string;
+  confirmPassword?: string;
 };

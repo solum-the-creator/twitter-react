@@ -7,7 +7,7 @@ import {
   updateProfile,
   UserCredential,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
@@ -20,10 +20,6 @@ export const registerWithEmail = async ({
 }: SignUpWithEmailData): Promise<UserCredential> => {
   const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
   const { user } = userCredentials;
-
-  await updateProfile(user, {
-    displayName: profile.name,
-  });
 
   const userProfile: UserProfile = {
     email: user.email!,
@@ -75,4 +71,16 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
   }
 
   return userCredentials;
+};
+
+export const updateUserProfile = async (uid: string, profileData: Partial<UserProfile>): Promise<void> => {
+  const userDocRef = doc(db, 'users', uid);
+
+  await updateDoc(userDocRef, profileData);
+
+  if (profileData.name && auth.currentUser) {
+    await updateProfile(auth.currentUser, {
+      displayName: profileData.name,
+    });
+  }
 };

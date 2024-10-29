@@ -46,6 +46,7 @@ export const UserName = styled.h2`
 
 export const Email = styled.p`
   margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
   font-size: 1rem;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.secondaryText};

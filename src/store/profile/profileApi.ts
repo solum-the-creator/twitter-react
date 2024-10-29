@@ -1,12 +1,13 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { fetchUserProfile } from '@/firebase/firebase-utils';
+import { fetchUserProfile, updateUserProfile } from '@/firebase/firebase-utils';
 import { UserProfile } from '@/types/user';
 import { getFirebaseErrorMessage, isFirebaseError } from '@/utils/errors-utils';
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: fakeBaseQuery(),
+  tagTypes: ['UserProfile'],
   endpoints: (builder) => ({
     getProfile: builder.query<UserProfile, string>({
       queryFn: async (uid) => {
@@ -25,8 +26,24 @@ export const profileApi = createApi({
           return { error: { message: 'An unexpected error occurred while fetching the profile.' } };
         }
       },
+      providesTags: (_, _error, uid) => [{ type: 'UserProfile', id: uid }],
+    }),
+    updateProfile: builder.mutation<void, { uid: string; profileData: Partial<UserProfile> }>({
+      queryFn: async ({ uid, profileData }) => {
+        try {
+          await updateUserProfile(uid, profileData);
+          return { data: undefined };
+        } catch (error) {
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred while updating the profile.' } };
+        }
+      },
+      invalidatesTags: (_, _error, { uid }) => [{ type: 'UserProfile', id: uid }],
     }),
   }),
 });
 
-export const { useGetProfileQuery } = profileApi;
+export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;

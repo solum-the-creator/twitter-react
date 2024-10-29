@@ -19,7 +19,13 @@ export const validationRules = {
     .required('Email is required')
     .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Email must be a valid format'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), undefined], 'Passwords must match')
+    .required('Confirm password is required'),
   day: yup.number().typeError('Day is required').required('Day is required'),
   month: yup.number().typeError('Month is required').required('Month is required'),
   year: yup.number().typeError('Year is required').required('Year is required'),
+  telegramLink: yup.string().url('Must be a valid URL'),
+  bio: yup.string().max(160, 'Description should not exceed 160 characters'),
 };

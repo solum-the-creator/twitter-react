@@ -1,6 +1,7 @@
 import defaultProfile from '@/assets/images/default-profile.png';
 import { selectUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
+import { useGetProfileQuery } from '@/store/profile/profileApi';
 
 import {
   Avatar,
@@ -12,10 +13,16 @@ import {
 } from './sidebar-profile.styled';
 
 export const SidebarProfile: React.FC = () => {
-  const user = useAppSelector(selectUser);
-  const { name, email, photoURL } = user;
+  const { email, uid } = useAppSelector(selectUser);
 
-  const profileImg = photoURL || defaultProfile;
+  const { data: profile, isLoading } = useGetProfileQuery(uid!);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const name = profile?.name || '';
+  const profileImg = profile?.profileImage || defaultProfile;
 
   return (
     <ProfileContainer>

@@ -11,9 +11,9 @@ export const useAuthListener = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const { uid, email, displayName, photoURL } = user;
+        const { uid, email } = user;
 
-        dispatch(setUser({ uid, email, name: displayName, photoURL }));
+        dispatch(setUser({ uid, email }));
       } else {
         dispatch(clearUser());
       }
