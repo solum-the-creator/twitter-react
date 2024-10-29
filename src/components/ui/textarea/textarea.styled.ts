@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 
-export const InputWrapper = styled.div<{ $fullWidth?: boolean }>`
+export const TextAreaWrapper = styled.div<{ $fullWidth?: boolean }>`
   display: flex;
   flex-direction: column;
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   margin-bottom: 0.5rem;
 `;
 
-export const StyledInput = styled.input<{ $hasError: boolean }>`
+export const StyledTextArea = styled.textarea<{ $hasError: boolean }>`
   padding: 1.25rem;
   border-radius: 0.375rem;
 
   font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+
+  min-height: 8rem;
 
   border: 1px solid ${({ $hasError, theme }) => ($hasError ? theme.colors.error : theme.colors.stroke)};
   color: ${({ $hasError, theme }) => ($hasError ? theme.colors.errorText : theme.colors.primaryText)};

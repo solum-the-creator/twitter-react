@@ -86,6 +86,7 @@ export const SignUpPage: React.FC = () => {
             <Input
               type="text"
               placeholder="Name"
+              helpText="Must be at least 3 characters long"
               fullWidth={true}
               {...register('name')}
               error={errors.name?.message}
@@ -93,6 +94,7 @@ export const SignUpPage: React.FC = () => {
             <Input
               type="phone"
               placeholder="Phone number"
+              helpText="Number must be in the Belarusian format"
               fullWidth={true}
               {...register('phone')}
               error={errors.phone?.message}
@@ -108,6 +110,7 @@ export const SignUpPage: React.FC = () => {
             <Input
               type="password"
               placeholder="Password"
+              helpText="Must be at least 6 characters long"
               fullWidth={true}
               {...register('password')}
               error={errors.password?.message}

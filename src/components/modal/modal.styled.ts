@@ -38,9 +38,13 @@ export const CloseButton = styled.button`
 
 export const ModalHeader = styled.div`
   padding: 1rem;
+  color: ${({ theme }) => theme.colors.primaryText};
+  font-size: 1.2rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 1rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.stroke};
 `;
 
 export const ModalContent = styled.div`
