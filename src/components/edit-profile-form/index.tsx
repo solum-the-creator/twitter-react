@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useUpdateProfileMutation } from '@/store/profile/profileApi';
-import { EditProfileFormData } from '@/types/user';
+import { EditProfileFormData, UserProfile } from '@/types/user';
 
 import { EditProfileCover } from '../edit-profile-cover';
 import { EditProfileImage } from '../edit-profile-image';
@@ -16,11 +17,12 @@ import { editProfileValidationSchema } from './edit-profile-scheme';
 
 type EditProfileFormProps = {
   uid: string;
-  initialValues?: EditProfileFormData;
+  initialValues: UserProfile;
   onSuccess?: () => void;
 };
 
 export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialValues, onSuccess }) => {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
   });
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-  const dispatch = useAppDispatch();
+  const [selectedProfileImage, setSelectedProfileImage] = useState<File>();
 
   const onSubmit: SubmitHandler<EditProfileFormData> = async (data) => {
     try {
@@ -43,6 +45,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           telegramLink: data.telegramLink,
         },
         newPassword: data.password,
+        newAvatarFile: selectedProfileImage,
       }).unwrap();
 
       onSuccess?.();
@@ -58,7 +61,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
 
       <FormControls>
         <EditProfilceImageWrapper>
-          <EditProfileImage />
+          <EditProfileImage onFileSelect={setSelectedProfileImage} profileUrl={initialValues.profileImage} />
         </EditProfilceImageWrapper>
 
         <Input

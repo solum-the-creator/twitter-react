@@ -29,9 +29,9 @@ export const profileApi = createApi({
       providesTags: (_, _error, uid) => [{ type: 'UserProfile', id: uid }],
     }),
     updateProfile: builder.mutation<void, UpdateProfileRequest>({
-      queryFn: async ({ uid, profileData, newPassword }) => {
+      queryFn: async ({ uid, profileData, newPassword, newAvatarFile }) => {
         try {
-          await updateUserProfile(uid, profileData, newPassword);
+          await updateUserProfile(uid, profileData, newPassword, newAvatarFile);
           return { data: undefined };
         } catch (error) {
           if (isFirebaseError(error)) {

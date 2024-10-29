@@ -8,10 +8,11 @@ import {
   UserCredential,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
-import { auth, db } from './config';
+import { auth, db, storage } from './config';
 
 export const registerWithEmail = async ({
   email,
@@ -73,11 +74,23 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
   return userCredentials;
 };
 
+export const uploadImage = async (file: File, uid: string): Promise<string> => {
+  const imageRef = ref(storage, `profile-images/${uid}`);
+  await uploadBytes(imageRef, file);
+  return getDownloadURL(imageRef);
+};
+
 export const updateUserProfile = async (
   uid: string,
   profileData: Partial<UserProfile>,
   newPassword?: string | null,
+  newAvatarFile?: File,
 ): Promise<void> => {
+  if (newAvatarFile) {
+    const avatarUrl = await uploadImage(newAvatarFile, uid);
+    profileData = { ...profileData, profileImage: avatarUrl };
+  }
+
   const userDocRef = doc(db, 'users', uid);
 
   await updateDoc(userDocRef, profileData);

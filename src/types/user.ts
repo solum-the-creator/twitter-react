@@ -25,6 +25,7 @@ export type UpdateProfileRequest = {
   uid: string;
   profileData: Partial<UserProfile>;
   newPassword?: string | null;
+  newAvatarFile?: File;
 };
 
 export type LoginFormData = {
