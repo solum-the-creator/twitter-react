@@ -1,5 +1,5 @@
 import defaultProfile from '@/assets/images/default-profile.png';
-import { selectUser } from '@/store/auth/authSelectors';
+import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
 
@@ -13,7 +13,7 @@ import {
 } from './sidebar-profile.styled';
 
 export const SidebarProfile: React.FC = () => {
-  const { email, uid } = useAppSelector(selectUser);
+  const { email, uid } = useAppSelector(selectAuthenticatedUser);
 
   const { data: profile, isLoading } = useGetProfileQuery(uid!);
 

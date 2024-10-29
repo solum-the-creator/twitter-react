@@ -5,15 +5,15 @@ import { Header } from '@/components/header';
 import { Modal } from '@/components/modal';
 import { ProfileBio } from '@/components/profile-bio';
 import { ProfileCover } from '@/components/profile-cover';
-import { selectUser } from '@/store/auth/authSelectors';
+import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
 
 import { HeaderInfo, HeaderName, HeaderTweetCount, ProfileContainer } from './profile.styled';
 
 export const ProfilePage: React.FC = () => {
-  const user = useAppSelector(selectUser);
-  const { data: userProfile, isLoading } = useGetProfileQuery(user.uid!);
+  const user = useAppSelector(selectAuthenticatedUser);
+  const { data: userProfile, isLoading } = useGetProfileQuery(user.uid);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -42,7 +42,7 @@ export const ProfilePage: React.FC = () => {
           />
           <Modal isOpen={openModal} onClose={() => setOpenModal(false)} header="Edit profile">
             <EditProfileForm
-              uid={user.uid!}
+              uid={user.uid}
               initialValues={userProfile}
               onSuccess={() => setOpenModal(false)}
             />
