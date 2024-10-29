@@ -6,6 +6,7 @@ export type UserProfile = {
   bio?: string;
   telegramLink?: string;
   profileImage?: string;
+  coverImage?: string;
 };
 
 export type SignUpFormData = Pick<UserProfile, 'name' | 'email' | 'phone'> & {
@@ -26,6 +27,8 @@ export type UpdateProfileRequest = {
   profileData: Partial<UserProfile>;
   newPassword?: string | null;
   newAvatarFile?: File;
+  newCoverFile?: File;
+  isCoverRemoved?: boolean;
 };
 
 export type LoginFormData = {

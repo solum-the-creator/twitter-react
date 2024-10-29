@@ -35,6 +35,9 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const [selectedProfileImage, setSelectedProfileImage] = useState<File>();
 
+  const [selectedCoverImage, setSelectedCoverImage] = useState<File>();
+  const [isCoverRemoved, setIsCoverRemoved] = useState(false);
+
   const onSubmit: SubmitHandler<EditProfileFormData> = async (data) => {
     try {
       await updateProfile({
@@ -46,6 +49,8 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
         },
         newPassword: data.password,
         newAvatarFile: selectedProfileImage,
+        newCoverFile: selectedCoverImage,
+        isCoverRemoved,
       }).unwrap();
 
       onSuccess?.();
@@ -55,9 +60,14 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
     }
   };
 
+  const handleCoverSelect = (file?: File, isCoverRemove?: boolean) => {
+    setSelectedCoverImage(file);
+    setIsCoverRemoved(isCoverRemove || false);
+  };
+
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
-      <EditProfileCover />
+      <EditProfileCover onFileSelect={handleCoverSelect} coverUrl={initialValues.coverImage} />
 
       <FormControls>
         <EditProfilceImageWrapper>

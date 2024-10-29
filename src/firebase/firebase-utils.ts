@@ -10,6 +10,7 @@ import {
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
+import { StorageDirectory } from '@/types/types';
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
 import { auth, db, storage } from './config';
@@ -74,8 +75,10 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
   return userCredentials;
 };
 
-export const uploadImage = async (file: File, uid: string): Promise<string> => {
-  const imageRef = ref(storage, `profile-images/${uid}`);
+export const uploadImage = async (file: File, uid: string, catalog?: StorageDirectory): Promise<string> => {
+  const path = catalog ? `${catalog}/${uid}` : uid;
+
+  const imageRef = ref(storage, path);
   await uploadBytes(imageRef, file);
   return getDownloadURL(imageRef);
 };
@@ -85,10 +88,19 @@ export const updateUserProfile = async (
   profileData: Partial<UserProfile>,
   newPassword?: string | null,
   newAvatarFile?: File,
+  newCoverFile?: File,
+  isCoverRemoved?: boolean,
 ): Promise<void> => {
   if (newAvatarFile) {
-    const avatarUrl = await uploadImage(newAvatarFile, uid);
+    const avatarUrl = await uploadImage(newAvatarFile, uid, 'profile-images');
     profileData = { ...profileData, profileImage: avatarUrl };
+  }
+
+  if (newCoverFile) {
+    const coverUrl = await uploadImage(newCoverFile, uid, 'cover-images');
+    profileData = { ...profileData, coverImage: coverUrl };
+  } else if (isCoverRemoved) {
+    profileData = { ...profileData, coverImage: '' };
   }
 
   const userDocRef = doc(db, 'users', uid);

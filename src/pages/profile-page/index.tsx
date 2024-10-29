@@ -31,7 +31,7 @@ export const ProfilePage: React.FC = () => {
               <HeaderTweetCount>0 Tweets</HeaderTweetCount>
             </HeaderInfo>
           </Header>
-          <ProfileCover />
+          <ProfileCover coverImage={userProfile.coverImage} />
           <ProfileBio
             name={userProfile.name}
             email={userProfile.email}
