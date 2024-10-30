@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  width: 100%;
-`;
-
 export const TweetFormWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -23,7 +19,6 @@ export const InputSection = styled.div`
 
 export const TextArea = styled.textarea`
   width: 100%;
-  padding: 0.5rem 0;
   font-family: 'Roboto', sans-serif;
   font-size: 1.1rem;
   line-height: 1.5;

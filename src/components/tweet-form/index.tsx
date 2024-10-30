@@ -14,7 +14,6 @@ import { ProfileImage } from '../ui/profile-image';
 import {
   ActionButton,
   Actions,
-  Container,
   ContentLength,
   InputSection,
   RightActions,
@@ -61,43 +60,42 @@ export const TweetForm: React.FC = () => {
   };
 
   return (
-    <Container>
-      <TweetFormWrapper>
-        <UserImageWrapper>
-          <ProfileImage size={48} src={userProfile?.profileImage} alt={userProfile?.name} />
-        </UserImageWrapper>
-        <InputSection>
-          <TextArea
-            ref={textAreaRef}
-            onInput={handleInput}
-            value={content}
-            placeholder="What's happening?!"
-          />
+    <TweetFormWrapper>
+      <UserImageWrapper>
+        <ProfileImage size={48} src={userProfile?.profileImage} alt={userProfile?.name} />
+      </UserImageWrapper>
+      <InputSection>
+        <TextArea
+          ref={textAreaRef}
+          onInput={handleInput}
+          value={content}
+          rows={3}
+          placeholder="What's happening?!"
+        />
 
-          <Actions>
-            <ActionButton>
-              <ImageIcon fill={theme.colors.accent} />
-            </ActionButton>
+        <Actions>
+          <ActionButton>
+            <ImageIcon fill={theme.colors.accent} />
+          </ActionButton>
 
-            <RightActions>
-              <ContentLength>
-                {content.length === 0 ? null : `${content.length} / ${tweetLength}`}
-              </ContentLength>
-              <TweetButtonWrapper>
-                <Button
-                  variant="primary"
-                  size="small"
-                  fullWidth={true}
-                  isLoading={isTweetAdding}
-                  disabled={content.length === 0}
-                  onClick={handleTweetSubmit}>
-                  Tweet
-                </Button>
-              </TweetButtonWrapper>
-            </RightActions>
-          </Actions>
-        </InputSection>
-      </TweetFormWrapper>
-    </Container>
+          <RightActions>
+            <ContentLength>
+              {content.length === 0 ? null : `${content.length} / ${tweetLength}`}
+            </ContentLength>
+            <TweetButtonWrapper>
+              <Button
+                variant="primary"
+                size="small"
+                fullWidth={true}
+                isLoading={isTweetAdding}
+                disabled={content.length === 0}
+                onClick={handleTweetSubmit}>
+                Tweet
+              </Button>
+            </TweetButtonWrapper>
+          </RightActions>
+        </Actions>
+      </InputSection>
+    </TweetFormWrapper>
   );
 };

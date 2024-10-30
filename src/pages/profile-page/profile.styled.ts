@@ -26,3 +26,14 @@ export const HeaderTweetCount = styled.p`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.secondaryText};
 `;
+
+export const ProfileTweets = styled.div`
+  width: 100%;
+  padding: 1rem 2rem;
+
+  font-family: 'Roboto Serif', serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.stroke};
+`;
