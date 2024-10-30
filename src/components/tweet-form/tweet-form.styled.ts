@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Form = styled.form`
+export const TweetFormWrapper = styled.div`
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -60,4 +60,23 @@ export const ActionButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors.accentHover};
   }
+`;
+
+export const RightActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const TweetButtonWrapper = styled.div`
+  width: 100%;
+  min-width: 8rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+export const ContentLength = styled.span`
+  width: 100%;
+  color: ${({ theme }) => theme.colors.secondaryText};
 `;

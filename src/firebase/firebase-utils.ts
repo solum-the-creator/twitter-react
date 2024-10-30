@@ -7,9 +7,10 @@ import {
   updatePassword,
   UserCredential,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
+import { Tweet } from '@/types/tweet';
 import { StorageDirectory } from '@/types/types';
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
@@ -116,4 +117,23 @@ export const updateUserProfile = async (
       throw new Error('User not authenticated');
     }
   }
+};
+
+export const addTweet = async (content: string): Promise<string> => {
+  const { currentUser } = auth;
+
+  if (!currentUser) {
+    throw new Error('User is not authenticated');
+  }
+
+  const userId = currentUser.uid;
+
+  const newTweet: Tweet = {
+    userId,
+    content,
+    timestamp: Date.now(),
+  };
+
+  const tweetRef = await addDoc(collection(db, 'tweets'), newTweet);
+  return tweetRef.id;
 };

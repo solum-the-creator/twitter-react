@@ -6,10 +6,12 @@ import { authApi } from '@/store/auth/authApi';
 import authSLice from '@/store/auth/authSlice';
 import notificationSlice from '@/store/notification/notificationSlice';
 import { profileApi } from '@/store/profile/profileApi';
+import { tweetsApi } from '@/store/tweets/tweetsApi';
 
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
+  [tweetsApi.reducerPath]: tweetsApi.reducer,
   auth: authSLice,
   notification: notificationSlice,
 });
@@ -17,7 +19,10 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware).concat(profileApi.middleware),
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(profileApi.middleware)
+      .concat(tweetsApi.middleware),
 });
 
 setupListeners(store.dispatch);

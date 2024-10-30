@@ -8,15 +8,12 @@ import { ProfileBio } from '@/components/profile-bio';
 import { ProfileCover } from '@/components/profile-cover';
 import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
-import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
-import { useAppSelector } from '@/store/index';
-import { useGetProfileQuery } from '@/store/profile/profileApi';
+import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
 
 import { HeaderInfo, HeaderName, HeaderTweetCount, ProfileContainer } from './profile.styled';
 
 export const ProfilePage: React.FC = () => {
-  const user = useAppSelector(selectAuthenticatedUser);
-  const { data: userProfile, isLoading } = useGetProfileQuery(user.uid);
+  const { uid, userProfile, isLoading } = useGetAuthProfile();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -44,11 +41,7 @@ export const ProfilePage: React.FC = () => {
             onEditProfile={() => setOpenModal(true)}
           />
           <Modal isOpen={openModal} onClose={() => setOpenModal(false)} header="Edit profile">
-            <EditProfileForm
-              uid={user.uid}
-              initialValues={userProfile}
-              onSuccess={() => setOpenModal(false)}
-            />
+            <EditProfileForm uid={uid} initialValues={userProfile} onSuccess={() => setOpenModal(false)} />
           </Modal>
 
           <TweetBox>
