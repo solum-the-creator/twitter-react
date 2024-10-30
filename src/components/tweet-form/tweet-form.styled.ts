@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  padding: 1rem;
 `;
 
 export const Form = styled.form`
@@ -41,10 +40,12 @@ export const TextArea = styled.textarea`
 `;
 
 export const Actions = styled.div`
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 0.5rem;
+  border-top: 1px solid ${({ theme }) => theme.colors.stroke};
 `;
 
 export const ActionButton = styled.button`

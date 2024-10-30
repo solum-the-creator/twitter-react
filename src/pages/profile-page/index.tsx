@@ -6,6 +6,7 @@ import { Header } from '@/components/header';
 import { Modal } from '@/components/modal';
 import { ProfileBio } from '@/components/profile-bio';
 import { ProfileCover } from '@/components/profile-cover';
+import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
@@ -50,7 +51,9 @@ export const ProfilePage: React.FC = () => {
             />
           </Modal>
 
-          <TweetForm />
+          <TweetBox>
+            <TweetForm />
+          </TweetBox>
         </>
       )}
     </ProfileContainer>
