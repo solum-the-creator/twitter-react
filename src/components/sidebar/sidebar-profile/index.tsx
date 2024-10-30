@@ -1,4 +1,5 @@
 import defaultProfile from '@/assets/images/default-profile.png';
+import { CenteredLoader } from '@/components/centered-loader';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
@@ -18,7 +19,7 @@ export const SidebarProfile: React.FC = () => {
   const { data: profile, isLoading } = useGetProfileQuery(uid!);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CenteredLoader />;
   }
 
   const name = profile?.name || '';

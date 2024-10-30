@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { CenteredLoader } from '@/components/centered-loader';
 import { EditProfileForm } from '@/components/edit-profile-form';
 import { Header } from '@/components/header';
 import { Modal } from '@/components/modal';
@@ -18,7 +19,7 @@ export const ProfilePage: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CenteredLoader />;
   }
 
   return (
