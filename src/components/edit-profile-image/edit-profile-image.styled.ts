@@ -13,11 +13,7 @@ export const AvatarContainer = styled.div`
   justify-content: center;
 `;
 
-export const AvatarPreview = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+export const AvatarPreview = styled.div`
   filter: brightness(0.8);
 `;
 

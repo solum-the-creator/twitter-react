@@ -6,6 +6,7 @@ import { Header } from '@/components/header';
 import { Modal } from '@/components/modal';
 import { ProfileBio } from '@/components/profile-bio';
 import { ProfileCover } from '@/components/profile-cover';
+import { TweetForm } from '@/components/tweet-form';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
@@ -48,6 +49,8 @@ export const ProfilePage: React.FC = () => {
               onSuccess={() => setOpenModal(false)}
             />
           </Modal>
+
+          <TweetForm />
         </>
       )}
     </ProfileContainer>

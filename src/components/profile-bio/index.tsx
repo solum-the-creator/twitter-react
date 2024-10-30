@@ -2,6 +2,7 @@ import testProfile from '@/assets/images/profile-image.png';
 
 import { Button } from '../ui/button';
 import { Link } from '../ui/link';
+import { ProfileImage } from '../ui/profile-image';
 
 import {
   ActionsWrapper,
@@ -11,7 +12,6 @@ import {
   Email,
   Follows,
   FollowsCount,
-  ProfileImage,
   ProfileImageWrapper,
   TopBio,
   UserName,
@@ -38,7 +38,7 @@ export const ProfileBio: React.FC<ProfileBioProps> = ({
     <Container>
       <TopBio>
         <ProfileImageWrapper>
-          <ProfileImage src={profileImage || testProfile} alt={`${name} image`} />
+          <ProfileImage src={profileImage || testProfile} alt="Profile image" />
         </ProfileImageWrapper>
         <ActionsWrapper>
           <Button variant="outline" size="small" onClick={onEditProfile}>

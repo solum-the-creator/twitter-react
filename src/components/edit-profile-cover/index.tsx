@@ -4,6 +4,7 @@ import CloseIcon from '@/assets/images/icons/close-icon.svg?react';
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
+import { theme } from '@/styles/theme';
 
 import {
   CoverActions,
@@ -61,7 +62,7 @@ export const EditProfileCover: React.FC<EditProfileCoverProps> = ({ coverUrl, on
       <CoverActions>
         <label htmlFor="coverInput">
           <CoverButton>
-            <ImageIcon />
+            <ImageIcon fill={theme.colors.primaryText} />
           </CoverButton>
         </label>
         {coverImage && (

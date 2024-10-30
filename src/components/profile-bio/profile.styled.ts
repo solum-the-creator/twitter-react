@@ -21,13 +21,6 @@ export const ProfileImageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const ProfileImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-`;
-
 export const ActionsWrapper = styled.div`
   display: flex;
   align-items: center;

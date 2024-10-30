@@ -3,6 +3,9 @@ import { useState } from 'react';
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
+import { theme } from '@/styles/theme';
+
+import { ProfileImage } from '../ui/profile-image';
 
 import { AvatarActions, AvatarButton, AvatarContainer, AvatarPreview } from './edit-profile-image.styled';
 
@@ -44,11 +47,15 @@ export const EditProfileImage: React.FC<EditProfileImageProps> = ({ profileUrl, 
 
   return (
     <AvatarContainer>
-      {avatarImage && <AvatarPreview src={avatarImage} alt="Profile Avatar" />}
+      {avatarImage && (
+        <AvatarPreview>
+          <ProfileImage src={avatarImage} alt="Profile image" />
+        </AvatarPreview>
+      )}
       <AvatarActions>
         <label htmlFor="avatarInput">
           <AvatarButton>
-            <ImageIcon />
+            <ImageIcon fill={theme.colors.primaryText} />
           </AvatarButton>
         </label>
       </AvatarActions>

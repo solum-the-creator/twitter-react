@@ -1,17 +1,11 @@
 import defaultProfile from '@/assets/images/default-profile.png';
 import { CenteredLoader } from '@/components/centered-loader';
+import { ProfileImage } from '@/components/ui/profile-image';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
 
-import {
-  Avatar,
-  AvatarWrapper,
-  ProfileContainer,
-  UserEmail,
-  UserInfo,
-  UserName,
-} from './sidebar-profile.styled';
+import { ProfileContainer, UserEmail, UserInfo, UserName } from './sidebar-profile.styled';
 
 export const SidebarProfile: React.FC = () => {
   const { email, uid } = useAppSelector(selectAuthenticatedUser);
@@ -27,9 +21,7 @@ export const SidebarProfile: React.FC = () => {
 
   return (
     <ProfileContainer>
-      <AvatarWrapper>
-        <Avatar src={profileImg} alt="User avatar" />
-      </AvatarWrapper>
+      <ProfileImage size={50} src={profileImg} alt="Profile image" />
       <UserInfo>
         <UserName>{name}</UserName>
         <UserEmail>{email}</UserEmail>
