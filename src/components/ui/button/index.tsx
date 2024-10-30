@@ -1,11 +1,14 @@
 import { ButtonVariant, Size } from '@/types/types';
 
+import { LoadingSpinner } from '../loading-spinner';
+
 import { IconSpan, StyledButton } from './button.styled';
 
 type ButtonProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
+  isLoading?: boolean;
   variant?: ButtonVariant;
   size?: Size;
   disabled?: boolean;
@@ -17,6 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   icon,
   onClick,
+  isLoading = false,
   variant = 'primary',
   size = 'medium',
   type = 'button',
@@ -29,10 +33,16 @@ export const Button: React.FC<ButtonProps> = ({
       $variant={variant}
       $fullWidth={fullWidth}
       $size={size}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={onClick}>
-      {icon && <IconSpan>{icon}</IconSpan>}
-      {children}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {icon && <IconSpan>{icon}</IconSpan>}
+          {children}
+        </>
+      )}
     </StyledButton>
   );
 };

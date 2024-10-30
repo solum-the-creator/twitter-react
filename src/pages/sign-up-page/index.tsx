@@ -144,15 +144,15 @@ export const SignUpPage: React.FC = () => {
               <Select
                 fullWidth={true}
                 placeholder="Year"
-                options={getYearOptions(1900, new Date().getFullYear()).reverse()}
+                options={getYearOptions(1900, 2014).reverse()}
                 {...register('year')}
                 onChange={handleYearChange}
                 error={errors.year?.message}
               />
             </SelectGroup>
           </DateOfBirthGroup>
-          <Button type="submit" variant="primary" size="large" fullWidth={true} disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Sign Up'}
+          <Button type="submit" variant="primary" size="large" fullWidth={true} isLoading={isLoading}>
+            Sign Up
           </Button>
         </SignUpForm>
       </Section>

@@ -128,8 +128,8 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           error={errors.confirmPassword?.message}
         />
 
-        <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Save'}
+        <Button type="submit" variant="primary" isLoading={isLoading}>
+          Save
         </Button>
       </FormControls>
     </FormContainer>

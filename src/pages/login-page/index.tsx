@@ -66,8 +66,8 @@ export const LoginPage = () => {
               {...register('password')}
               error={errors.password?.message}
             />
-            <Button type="submit" variant="primary" fullWidth={true} size="large" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Log in'}
+            <Button type="submit" variant="primary" fullWidth={true} size="large" isLoading={isLoading}>
+              Log in
             </Button>
           </ControlGroup>
           <SignUpLintWrapper>

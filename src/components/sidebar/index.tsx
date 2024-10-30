@@ -38,7 +38,7 @@ export const Sidebar: React.FC = () => {
       </SidebarMenuWrapper>
       <BottomSection>
         <SidebarProfile />
-        <Button variant="secondary" onClick={handleLogout} disabled={isLoading}>
+        <Button variant="secondary" onClick={handleLogout} isLoading={isLoading}>
           Log out
         </Button>
       </BottomSection>
