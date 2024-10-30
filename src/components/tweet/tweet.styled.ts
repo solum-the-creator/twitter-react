@@ -69,6 +69,7 @@ export const Text = styled.p`
   color: ${({ theme }) => theme.colors.primaryText};
 
   margin-bottom: 0.5rem;
+  word-break: break-word;
 `;
 
 export const TweetFooter = styled.div`

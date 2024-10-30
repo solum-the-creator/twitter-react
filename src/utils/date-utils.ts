@@ -29,3 +29,11 @@ export const getYearOptions = (startYear: number, endYear: number) => {
     return { value: year, label: year.toString() };
   });
 };
+
+export const formatShortDate = (timestamp: number) => {
+  const date = new Date(timestamp);
+  const day = date.getDate();
+  const month = date.toLocaleString('en-US', { month: 'short' });
+
+  return `${day} ${month}`;
+};

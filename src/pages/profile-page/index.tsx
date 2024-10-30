@@ -6,12 +6,19 @@ import { Header } from '@/components/header';
 import { Modal } from '@/components/modal';
 import { ProfileBio } from '@/components/profile-bio';
 import { ProfileCover } from '@/components/profile-cover';
-import { Tweet } from '@/components/tweet';
 import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
+import { TweetList } from '@/components/tweet-list';
 import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
 
-import { HeaderInfo, HeaderName, HeaderTweetCount, ProfileContainer, ProfileTweets } from './profile.styled';
+import {
+  HeaderInfo,
+  HeaderName,
+  HeaderTweetCount,
+  ProfileContainer,
+  ProfileTweets,
+  TweetsWrapper,
+} from './profile.styled';
 
 export const ProfilePage: React.FC = () => {
   const { uid, userProfile, isLoading } = useGetAuthProfile();
@@ -51,8 +58,9 @@ export const ProfilePage: React.FC = () => {
 
           <ProfileTweets>Tweets</ProfileTweets>
 
-          <Tweet />
-          <Tweet />
+          <TweetsWrapper>
+            <TweetList />
+          </TweetsWrapper>
         </>
       )}
     </ProfileContainer>

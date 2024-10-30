@@ -7,10 +7,21 @@ import {
   updatePassword,
   UserCredential,
 } from 'firebase/auth';
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-import { Tweet } from '@/types/tweet';
+import { Tweet, TweetResponse } from '@/types/tweet';
 import { StorageDirectory } from '@/types/types';
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
@@ -136,4 +147,21 @@ export const addTweet = async (content: string): Promise<string> => {
 
   const tweetRef = await addDoc(collection(db, 'tweets'), newTweet);
   return tweetRef.id;
+};
+
+export const getTweetsByUserId = async (userId: string): Promise<TweetResponse[]> => {
+  try {
+    const tweetsRef = collection(db, 'tweets');
+
+    const q = query(tweetsRef, where('userId', '==', userId), orderBy('timestamp', 'desc'));
+
+    const querySnapshot = await getDocs(q);
+
+    const tweets = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as TweetResponse);
+
+    return tweets;
+  } catch (error) {
+    console.error('Error fetching tweets:', error);
+    throw error;
+  }
 };

@@ -1,6 +1,9 @@
 import LikeIcon from '@/assets/images/icons/like-icon.svg?react';
 import MoreIcon from '@/assets/images/icons/more-outline-icon.svg?react';
+import { useGetProfileQuery } from '@/store/profile/profileApi';
+import { formatShortDate } from '@/utils/date-utils';
 
+import { CenteredLoader } from '../centered-loader';
 import { TweetBox } from '../tweet-box';
 import { ProfileImage } from '../ui/profile-image';
 
@@ -20,41 +23,52 @@ import {
   UserImageWrapper,
 } from './tweet.styled';
 
-export const Tweet: React.FC = () => {
+type TweetProps = {
+  id: string;
+  content: string;
+  userId: string;
+  timestamp: number;
+};
+
+export const Tweet: React.FC<TweetProps> = ({ content, userId, timestamp }) => {
+  const { data: userProfile, isLoading } = useGetProfileQuery(userId);
+
+  if (isLoading) {
+    return <CenteredLoader />;
+  }
+
   return (
     <TweetBox>
-      <Container>
-        <UserImageWrapper>
-          <ProfileImage size={48} src="" alt="" />
-        </UserImageWrapper>
-        <Content>
-          <TweetHeader>
-            <Name>John Doe</Name>
-            <MetaInfo>@mr.kosukevi4 · Apr 1</MetaInfo>
-          </TweetHeader>
+      {userProfile && (
+        <Container>
+          <UserImageWrapper>
+            <ProfileImage size={48} src={userProfile.profileImage} alt={userProfile.name} />
+          </UserImageWrapper>
+          <Content>
+            <TweetHeader>
+              <Name>{userProfile.name}</Name>
+              <MetaInfo>· {formatShortDate(timestamp)}</MetaInfo>
+            </TweetHeader>
 
-          <Text>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut mollitia ducimus culpa, accusamus
-            ipsa iure in repudiandae tenetur recusandae aperiam velit itaque. Eos modi expedita ipsa fugiat,
-            perspiciatis fugit sit?
-          </Text>
+            <Text>{content}</Text>
 
-          <TweetFooter>
-            <Like>
-              <LikeButton>
-                <LikeIcon />
-              </LikeButton>
-              <LikeCount>0</LikeCount>
-            </Like>
-          </TweetFooter>
-        </Content>
+            <TweetFooter>
+              <Like>
+                <LikeButton>
+                  <LikeIcon />
+                </LikeButton>
+                <LikeCount>0</LikeCount>
+              </Like>
+            </TweetFooter>
+          </Content>
 
-        <ActionsWrapper>
-          <ActionButton>
-            <MoreIcon />
-          </ActionButton>
-        </ActionsWrapper>
-      </Container>
+          <ActionsWrapper>
+            <ActionButton>
+              <MoreIcon />
+            </ActionButton>
+          </ActionsWrapper>
+        </Container>
+      )}
     </TweetBox>
   );
 };

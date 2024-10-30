@@ -37,3 +37,13 @@ export const ProfileTweets = styled.div`
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.stroke};
 `;
+
+export const TweetsWrapper = styled.div`
+  margin-bottom: 2rem;
+  width: 100%;
+  min-height: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
