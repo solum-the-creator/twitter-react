@@ -4,6 +4,7 @@ import { useGetProfileQuery } from '@/store/profile/profileApi';
 import { formatShortDate } from '@/utils/date-utils';
 
 import { CenteredLoader } from '../centered-loader';
+import { ImagesPreview } from '../images-preview';
 import { TweetBox } from '../tweet-box';
 import { ProfileImage } from '../ui/profile-image';
 
@@ -26,11 +27,12 @@ import {
 type TweetProps = {
   id: string;
   content: string;
+  imageUrls: string[];
   userId: string;
   timestamp: number;
 };
 
-export const Tweet: React.FC<TweetProps> = ({ content, userId, timestamp }) => {
+export const Tweet: React.FC<TweetProps> = ({ content, imageUrls = [], userId, timestamp }) => {
   const { data: userProfile, isLoading } = useGetProfileQuery(userId);
 
   if (isLoading) {
@@ -51,6 +53,8 @@ export const Tweet: React.FC<TweetProps> = ({ content, userId, timestamp }) => {
             </TweetHeader>
 
             <Text>{content}</Text>
+
+            <ImagesPreview images={imageUrls} />
 
             <TweetFooter>
               <Like>

@@ -15,9 +15,12 @@ export const ImagesPreview: React.FC<ImagesPreviewProps> = ({ images, onRemove }
       {images.map((url) => (
         <ImagePreviewStyled key={url} $imagesCount={images.length}>
           <Image src={url} alt={`Tweet image ${url}`} />
-          <RemoveButtonWrapper>
-            <RemoveButton onClick={() => handleRemove(url)} />
-          </RemoveButtonWrapper>
+
+          {onRemove && (
+            <RemoveButtonWrapper>
+              <RemoveButton onClick={() => handleRemove(url)} />
+            </RemoveButtonWrapper>
+          )}
         </ImagePreviewStyled>
       ))}
     </PreviewContainer>
