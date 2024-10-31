@@ -40,11 +40,3 @@ export const CoverButton = styled.div`
     background-color: rgba(255, 255, 255, 0.9);
   }
 `;
-
-export const RemoveButton = styled(CoverButton)`
-  background-color: rgba(255, 0, 0, 0.5);
-
-  &:hover {
-    background-color: rgba(255, 0, 0, 0.7);
-  }
-`;

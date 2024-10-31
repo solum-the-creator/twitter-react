@@ -9,10 +9,10 @@ export const tweetsApi = createApi({
   baseQuery: fakeBaseQuery(),
   tagTypes: ['Tweet'],
   endpoints: (builder) => ({
-    addTweet: builder.mutation<string, { content: string }>({
-      queryFn: async ({ content }) => {
+    addTweet: builder.mutation<string, { content: string; imageFiles: File[] }>({
+      queryFn: async ({ content, imageFiles }) => {
         try {
-          const tweetId = await addTweet(content);
+          const tweetId = await addTweet(content, imageFiles);
           return { data: tweetId };
         } catch (error) {
           if (isFirebaseError(error)) {

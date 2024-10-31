@@ -130,7 +130,7 @@ export const updateUserProfile = async (
   }
 };
 
-export const addTweet = async (content: string): Promise<string> => {
+export const addTweet = async (content: string, imageFiles: File[] = []): Promise<string> => {
   const { currentUser } = auth;
 
   if (!currentUser) {
@@ -139,10 +139,15 @@ export const addTweet = async (content: string): Promise<string> => {
 
   const userId = currentUser.uid;
 
+  const imageUrls = await Promise.all(
+    imageFiles.map((file, index) => uploadImage(file, `${userId}-${Date.now()}-${index}`, 'tweet-images')),
+  );
+
   const newTweet: Tweet = {
     userId,
     content,
     timestamp: Date.now(),
+    imageUrls,
   };
 
   const tweetRef = await addDoc(collection(db, 'tweets'), newTweet);

@@ -1,18 +1,14 @@
 import { useState } from 'react';
 
-import CloseIcon from '@/assets/images/icons/close-icon.svg?react';
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
+import { allowedFormats, maxImageSizeMB } from '@/constants/tweets';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { theme } from '@/styles/theme';
 
-import {
-  CoverActions,
-  CoverButton,
-  CoverContainer,
-  CoverPreview,
-  RemoveButton,
-} from './edit-profile-cover.styled';
+import { RemoveButton } from '../ui/remove-button';
+
+import { CoverActions, CoverButton, CoverContainer, CoverPreview } from './edit-profile-cover.styled';
 
 type EditProfileCoverProps = {
   coverUrl?: string;
@@ -27,13 +23,12 @@ export const EditProfileCover: React.FC<EditProfileCoverProps> = ({ coverUrl, on
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      const maxSizeInMB = 4;
-      if (file.size > maxSizeInMB * 1024 * 1024) {
+      if (file.size > maxImageSizeMB * 1024 * 1024) {
         dispatch(addNotification({ type: 'error', message: 'File size should be less than 4MB' }));
         return;
       }
 
-      if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+      if (!allowedFormats.includes(file.type)) {
         dispatch(addNotification({ type: 'error', message: 'Only JPEG, JPG and PNG files are allowed' }));
         return;
       }
@@ -65,16 +60,12 @@ export const EditProfileCover: React.FC<EditProfileCoverProps> = ({ coverUrl, on
             <ImageIcon fill={theme.colors.primaryText} />
           </CoverButton>
         </label>
-        {coverImage && (
-          <RemoveButton onClick={handleRemoveCover}>
-            <CloseIcon />
-          </RemoveButton>
-        )}
+        {coverImage && <RemoveButton onClick={handleRemoveCover} />}
       </CoverActions>
       <input
         id="coverInput"
         type="file"
-        accept="image/png, image/jpeg, image/jpg"
+        accept={allowedFormats.join(', ')}
         onChange={handleCoverChange}
         style={{ display: 'none' }}
       />

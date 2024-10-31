@@ -43,17 +43,27 @@ export const Actions = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.stroke};
 `;
 
-export const ActionButton = styled.button`
+export const ImageLabel = styled.label<{ disabled?: boolean }>`
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+`;
+
+export const ActionButton = styled.div<{ disabled?: boolean }>`
+  width: 2.5rem;
+  height: 2.5rem;
   background: none;
   border: none;
-  cursor: pointer;
   color: ${({ theme }) => theme.colors.accent};
   padding: 0.5rem;
   border-radius: 50%;
   transition: background-color 0.2s ease;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   &:hover {
-    background-color: ${({ theme }) => theme.colors.accentHover};
+    background-color: ${({ theme, disabled }) => (disabled ? 'transparent' : theme.colors.accentHover)};
   }
 `;
 
@@ -74,4 +84,10 @@ export const TweetButtonWrapper = styled.div`
 export const ContentLength = styled.span`
   width: 100%;
   color: ${({ theme }) => theme.colors.secondaryText};
+`;
+
+export const ImagesPreviewWrapper = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
 `;

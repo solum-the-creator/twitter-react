@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
+import { allowedFormats, maxImageSizeMB } from '@/constants/tweets';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { theme } from '@/styles/theme';
@@ -21,13 +22,12 @@ export const EditProfileImage: React.FC<EditProfileImageProps> = ({ profileUrl, 
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      const maxSizeInMB = 4;
-      if (file.size > maxSizeInMB * 1024 * 1024) {
+      if (file.size > maxImageSizeMB * 1024 * 1024) {
         dispatch(addNotification({ type: 'error', message: 'File size should be less than 4MB' }));
         return;
       }
 
-      if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+      if (!allowedFormats.includes(file.type)) {
         dispatch(addNotification({ type: 'error', message: 'Only JPEG, JPG and PNG files are allowed' }));
         return;
       }
@@ -62,7 +62,7 @@ export const EditProfileImage: React.FC<EditProfileImageProps> = ({ profileUrl, 
       <input
         id="avatarInput"
         type="file"
-        accept="image/png, image/jpeg, image/jpg"
+        accept={allowedFormats.join(', ')}
         onChange={handleAvatarChange}
         style={{ display: 'none' }}
       />

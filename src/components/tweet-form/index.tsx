@@ -1,13 +1,15 @@
 import { useRef, useState } from 'react';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
-import { tweetLength } from '@/constants/tweets';
+import { allowedFormats, maxImageCount, maxImageSizeMB, tweetLength } from '@/constants/tweets';
 import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useAddTweetMutation } from '@/store/tweets/tweetsApi';
 import { theme } from '@/styles/theme';
+import { validateFiles } from '@/utils/file-validations-utils';
 
+import { ImagesPreview } from '../images-preview';
 import { Button } from '../ui/button';
 import { ProfileImage } from '../ui/profile-image';
 
@@ -15,6 +17,8 @@ import {
   ActionButton,
   Actions,
   ContentLength,
+  ImageLabel,
+  ImagesPreviewWrapper,
   InputSection,
   RightActions,
   TextArea,
@@ -25,10 +29,17 @@ import {
 
 export const TweetForm: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const { userProfile } = useGetAuthProfile();
 
   const [content, setContent] = useState('');
+
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const isEmpty = content.trim().length === 0;
+  const maxImageCountReached = selectedImages.length >= maxImageCount;
+  const tweetDisabled = isEmpty && !selectedImages.length;
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const [addTweet, { isLoading: isTweetAdding }] = useAddTweetMutation();
@@ -46,12 +57,43 @@ export const TweetForm: React.FC = () => {
     }
   };
 
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const files = Array.from(event.target.files);
+
+      const { validFiles, errorMessages } = validateFiles(
+        files,
+        selectedImages.length,
+        allowedFormats,
+        maxImageSizeMB,
+        maxImageCount,
+      );
+
+      errorMessages.forEach((message) => {
+        dispatch(addNotification({ type: 'error', message }));
+      });
+
+      if (validFiles.length > 0) {
+        setSelectedImages((prevImages) => [...prevImages, ...validFiles]);
+        const newUrls = validFiles.map((file) => URL.createObjectURL(file));
+        setImageUrls((prevUrls) => [...prevUrls, ...newUrls]);
+      }
+    }
+  };
+
+  const handleRemoveImage = (url: string) => {
+    setImageUrls((prevUrls) => prevUrls.filter((u) => u !== url));
+    setSelectedImages((prevImages) => prevImages.filter((_, index) => imageUrls[index] !== url));
+  };
+
   const handleTweetSubmit = async () => {
-    if (content.trim()) {
+    if (content.trim() || selectedImages.length) {
       try {
-        await addTweet({ content: content.trim() });
+        await addTweet({ content: content.trim(), imageFiles: selectedImages });
         dispatch(addNotification({ type: 'success', message: 'Tweet added successfully' }));
         setContent('');
+        setSelectedImages([]);
+        setImageUrls([]);
       } catch (error) {
         const errorMessage = (error as { message: string }).message || 'An unexpected error occurred';
         dispatch(addNotification({ type: 'error', message: errorMessage }));
@@ -73,22 +115,37 @@ export const TweetForm: React.FC = () => {
           placeholder="What's happening?!"
         />
 
+        {selectedImages.length > 0 && (
+          <ImagesPreviewWrapper>
+            <ImagesPreview images={imageUrls} onRemove={handleRemoveImage} />
+          </ImagesPreviewWrapper>
+        )}
+
         <Actions>
-          <ActionButton>
-            <ImageIcon fill={theme.colors.accent} />
+          <ActionButton disabled={maxImageCountReached}>
+            <ImageLabel htmlFor="tweetImageInput" disabled={maxImageCountReached}>
+              <ImageIcon fill={maxImageCountReached ? theme.colors.accentDisabled : theme.colors.accent} />
+            </ImageLabel>
           </ActionButton>
 
+          <input
+            id="tweetImageInput"
+            type="file"
+            accept={allowedFormats.join(',')}
+            multiple
+            onChange={handleImageSelect}
+            style={{ display: 'none' }}
+          />
+
           <RightActions>
-            <ContentLength>
-              {content.length === 0 ? null : `${content.length} / ${tweetLength}`}
-            </ContentLength>
+            <ContentLength>{!isEmpty && `${content.length} / ${tweetLength}`}</ContentLength>
             <TweetButtonWrapper>
               <Button
                 variant="primary"
                 size="small"
                 fullWidth={true}
                 isLoading={isTweetAdding}
-                disabled={content.length === 0}
+                disabled={tweetDisabled}
                 onClick={handleTweetSubmit}>
                 Tweet
               </Button>
