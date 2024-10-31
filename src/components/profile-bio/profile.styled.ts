@@ -50,6 +50,7 @@ export const Bio = styled.p`
   font-size: 1.125rem;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.primaryText};
+  word-break: break-word;
 `;
 
 export const Follows = styled.div`
