@@ -22,7 +22,7 @@ import {
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-import { Tweet, TweetResponse } from '@/types/tweet';
+import { Likes, Tweet, TweetResponse } from '@/types/tweet';
 import { StorageDirectory } from '@/types/types';
 import { SignUpWithEmailData, UserProfile } from '@/types/user';
 
@@ -149,6 +149,10 @@ export const addTweet = async (content: string, imageFiles: File[] = []): Promis
     content,
     timestamp: Date.now(),
     imageUrls,
+    likes: {
+      count: 0,
+      likesBy: [],
+    },
   };
 
   const tweetRef = await addDoc(collection(db, 'tweets'), newTweet);
@@ -206,4 +210,26 @@ export const deleteTweet = async (tweetId: string): Promise<void> => {
   }
 
   await deleteDoc(tweetRef);
+};
+
+export const toggleLikeTweet = async (tweetId: string, userId: string): Promise<void> => {
+  const tweetRef = doc(db, 'tweets', tweetId);
+  const tweetSnapshot = await getDoc(tweetRef);
+
+  if (!tweetSnapshot.exists()) {
+    throw new Error('Tweet does not exist');
+  }
+
+  const tweetData = tweetSnapshot.data();
+  const { likesBy } = tweetData.likes as Likes;
+
+  const hasLiked = likesBy.includes(userId);
+  const updatedLikesBy = hasLiked ? likesBy.filter((id) => id !== userId) : [...likesBy, userId];
+
+  await updateDoc(tweetRef, {
+    likes: {
+      count: updatedLikesBy.length,
+      likesBy: updatedLikesBy,
+    },
+  });
 };

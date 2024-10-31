@@ -1,16 +1,17 @@
 import { useState } from 'react';
 
-import LikeIcon from '@/assets/images/icons/like-icon.svg?react';
 import MoreIcon from '@/assets/images/icons/more-outline-icon.svg?react';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppDispatch, useAppSelector } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
 import { useDeleteTweetMutation } from '@/store/tweets/tweetsApi';
+import { Likes } from '@/types/tweet';
 import { formatShortDate } from '@/utils/date-utils';
 
 import { CenteredLoader } from '../centered-loader';
 import { ImagesPreview } from '../images-preview';
+import { Like } from '../like';
 import { TweetBox } from '../tweet-box';
 import { TweetPopup } from '../tweet-popup';
 import { ProfileImage } from '../ui/profile-image';
@@ -20,9 +21,6 @@ import {
   ActionsWrapper,
   Container,
   Content,
-  Like,
-  LikeButton,
-  LikeCount,
   MetaInfo,
   Name,
   Text,
@@ -38,9 +36,17 @@ type TweetItemProps = {
   imageUrls: string[];
   userId: string;
   timestamp: number;
+  likes: Likes;
 };
 
-export const TweetItem: React.FC<TweetItemProps> = ({ id, content, imageUrls = [], userId, timestamp }) => {
+export const TweetItem: React.FC<TweetItemProps> = ({
+  id,
+  content,
+  likes,
+  imageUrls = [],
+  userId,
+  timestamp,
+}) => {
   const { uid: authUserId } = useAppSelector(selectAuthenticatedUser);
 
   const dispatch = useAppDispatch();
@@ -50,6 +56,9 @@ export const TweetItem: React.FC<TweetItemProps> = ({ id, content, imageUrls = [
   const [isDeletingLocal, setIsDeletingLocal] = useState(false);
 
   const [deleteTweet, { isLoading: isDeleting }] = useDeleteTweetMutation();
+
+  const hasLiked = likes.likesBy.includes(authUserId);
+  const likeCount = likes.count;
 
   const handleDelete = async () => {
     setIsPopupOpen(false);
@@ -100,12 +109,7 @@ export const TweetItem: React.FC<TweetItemProps> = ({ id, content, imageUrls = [
             <ImagesPreview images={imageUrls} />
 
             <TweetFooter>
-              <Like>
-                <LikeButton>
-                  <LikeIcon />
-                </LikeButton>
-                <LikeCount>0</LikeCount>
-              </Like>
+              <Like tweetId={id} userId={authUserId} isLiked={hasLiked} count={likeCount} />
             </TweetFooter>
           </Content>
 

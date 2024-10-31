@@ -100,7 +100,7 @@ export const LikeButton = styled.button`
   }
 `;
 
-export const Like = styled.div`
+export const Like = styled.div<{ $liked: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
