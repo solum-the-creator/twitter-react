@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
 export const SidebarContainer = styled.aside`
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   background-color: ${({ theme }) => theme.colors.primary};
   border-right: 1px solid ${({ theme }) => theme.colors.stroke};
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
   height: 100vh;
+  overflow: auto;
+
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
 
   @media screen and (max-width: 768px) {
     width: 4.5rem;
@@ -20,7 +25,7 @@ export const SidebarContainer = styled.aside`
 export const SidebarMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 export const SidebarLogo = styled.div`
@@ -33,5 +38,5 @@ export const BottomSection = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 `;

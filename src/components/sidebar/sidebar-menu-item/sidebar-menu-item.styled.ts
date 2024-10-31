@@ -6,14 +6,14 @@ export const MenuItemWrapper = styled.div`
   padding: 0.75rem 1.25rem 0.75rem 0.75rem;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 
   transition: background-color 0.2s ease-in-out;
 `;
 
 export const IconWrapper = styled.div`
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
