@@ -1,7 +1,9 @@
 import { useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 import CloseIcon from '@/assets/images/icons/close-icon.svg?react';
 import { useClickOutside } from '@/hooks/use-click-outside';
+import { useHideOverflow } from '@/hooks/use-hide-overflow';
 
 import { Backdrop, CloseButton, Container, ModalContent, ModalHeader, ModalWrapper } from './modal.styled';
 
@@ -15,13 +17,14 @@ type ModalProps = {
 export const Modal: React.FC<ModalProps> = ({ isOpen, children, header, onClose }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(modalRef, onClose, true);
+  useClickOutside(modalRef, onClose);
+  useHideOverflow(isOpen);
 
   if (!isOpen) {
     return null;
   }
 
-  return (
+  return createPortal(
     <Container>
       <Backdrop />
       <ModalWrapper ref={modalRef}>
@@ -33,6 +36,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, children, header, onClose 
         </ModalHeader>
         <ModalContent>{children}</ModalContent>
       </ModalWrapper>
-    </Container>
+    </Container>,
+    document.body,
   );
 };

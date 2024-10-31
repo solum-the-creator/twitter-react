@@ -16,11 +16,18 @@ export const TweetPopup: React.FC<TweetPopupProps> = ({ isOpen, onClose, onDelet
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const popupRef = useRef<HTMLDivElement>(null);
-  useClickOutside(popupRef, onClose);
 
   const handleConfirmClose = () => {
     setIsConfirmModalOpen(false);
   };
+
+  const handleClose = () => {
+    if (!isConfirmModalOpen) {
+      onClose();
+    }
+  };
+
+  useClickOutside(popupRef, handleClose);
 
   const handleConfirm = () => {
     setIsConfirmModalOpen(false);

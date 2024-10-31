@@ -20,6 +20,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   onClose,
   onConfirm,
 }) => {
+  const handleConfirm = () => {
+    onConfirm();
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} header={header}>
       <Content>
@@ -28,7 +33,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
           <Button variant="secondary" onClick={onClose} fullWidth={true}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={onConfirm} fullWidth={true}>
+          <Button variant="primary" onClick={handleConfirm} fullWidth={true}>
             {confirmText}
           </Button>
         </Actions>
