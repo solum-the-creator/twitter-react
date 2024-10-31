@@ -10,6 +10,7 @@ import {
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -169,4 +170,9 @@ export const getTweetsByUserId = async (userId: string): Promise<TweetResponse[]
     console.error('Error fetching tweets:', error);
     throw error;
   }
+};
+
+export const deleteTweet = async (tweetId: string): Promise<void> => {
+  const tweetRef = doc(db, 'tweets', tweetId);
+  await deleteDoc(tweetRef);
 };

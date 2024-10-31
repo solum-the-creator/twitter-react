@@ -18,6 +18,7 @@ export const Content = styled.div`
 `;
 
 export const ActionsWrapper = styled.div`
+  position: relative;
   width: 2rem;
   display: flex;
   align-items: flex-start;
@@ -109,4 +110,14 @@ export const Like = styled.div`
 export const LikeCount = styled.span`
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: 1.125rem;
+`;
+
+export const TweetLoading = styled.div`
+  min-height: 10rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
 `;

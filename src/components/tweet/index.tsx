@@ -1,11 +1,17 @@
+import { useState } from 'react';
+
 import LikeIcon from '@/assets/images/icons/like-icon.svg?react';
 import MoreIcon from '@/assets/images/icons/more-outline-icon.svg?react';
+import { useAppDispatch } from '@/store/index';
+import { addNotification } from '@/store/notification/notificationSlice';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
+import { useDeleteTweetMutation } from '@/store/tweets/tweetsApi';
 import { formatShortDate } from '@/utils/date-utils';
 
 import { CenteredLoader } from '../centered-loader';
 import { ImagesPreview } from '../images-preview';
 import { TweetBox } from '../tweet-box';
+import { TweetPopup } from '../tweet-popup';
 import { ProfileImage } from '../ui/profile-image';
 
 import {
@@ -21,6 +27,7 @@ import {
   Text,
   TweetFooter,
   TweetHeader,
+  TweetLoading,
   UserImageWrapper,
 } from './tweet.styled';
 
@@ -32,11 +39,44 @@ type TweetProps = {
   timestamp: number;
 };
 
-export const Tweet: React.FC<TweetProps> = ({ content, imageUrls = [], userId, timestamp }) => {
+export const Tweet: React.FC<TweetProps> = ({ id, content, imageUrls = [], userId, timestamp }) => {
+  const dispatch = useAppDispatch();
   const { data: userProfile, isLoading } = useGetProfileQuery(userId);
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeletingLocal, setIsDeletingLocal] = useState(false);
+
+  const [deleteTweet, { isLoading: isDeleting }] = useDeleteTweetMutation();
+
+  const handleDelete = async () => {
+    setIsPopupOpen(false);
+    setIsDeletingLocal(true);
+
+    try {
+      await deleteTweet(id);
+
+      dispatch(addNotification({ type: 'success', message: 'Tweet deleted successfully' }));
+    } catch (error) {
+      setIsDeletingLocal(false);
+      const errorMessage = (error as { message: string }).message || 'An unexpected error occurred';
+      dispatch(addNotification({ type: 'error', message: errorMessage }));
+    }
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen((prev) => !prev);
+  };
+
   if (isLoading) {
-    return <CenteredLoader />;
+    return (
+      <TweetLoading>
+        <CenteredLoader />
+      </TweetLoading>
+    );
+  }
+
+  if (isDeleting || isDeletingLocal) {
+    return null;
   }
 
   return (
@@ -67,9 +107,10 @@ export const Tweet: React.FC<TweetProps> = ({ content, imageUrls = [], userId, t
           </Content>
 
           <ActionsWrapper>
-            <ActionButton>
+            <ActionButton onClick={togglePopup}>
               <MoreIcon />
             </ActionButton>
+            <TweetPopup isOpen={isPopupOpen} onClose={togglePopup} onDelete={handleDelete} />
           </ActionsWrapper>
         </Container>
       )}
