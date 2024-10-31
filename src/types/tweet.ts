@@ -1,7 +1,7 @@
 export type Tweet = {
   userId: string;
   content: string;
-  imageUrls?: string[];
+  imageUrls: string[];
   timestamp: number;
 };
 

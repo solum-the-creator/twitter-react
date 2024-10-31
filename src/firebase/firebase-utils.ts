@@ -172,7 +172,38 @@ export const getTweetsByUserId = async (userId: string): Promise<TweetResponse[]
   }
 };
 
+export const getAllTweets = async (): Promise<TweetResponse[]> => {
+  try {
+    const tweetsRef = collection(db, 'tweets');
+    const q = query(tweetsRef, orderBy('timestamp', 'desc'));
+    const querySnapshot = await getDocs(q);
+    const tweets = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as TweetResponse);
+    return tweets;
+  } catch (error) {
+    console.error('Error fetching tweets:', error);
+    throw error;
+  }
+};
+
 export const deleteTweet = async (tweetId: string): Promise<void> => {
+  const { currentUser } = auth;
+  if (!currentUser) {
+    throw new Error('User is not authenticated');
+  }
+
   const tweetRef = doc(db, 'tweets', tweetId);
+
+  const tweetSnapshot = await getDoc(tweetRef);
+
+  if (!tweetSnapshot.exists()) {
+    throw new Error('Tweet does not exist');
+  }
+
+  const tweetData = tweetSnapshot.data();
+
+  if (tweetData.userId !== currentUser.uid) {
+    throw new Error("You can't delete this tweet");
+  }
+
   await deleteDoc(tweetRef);
 };

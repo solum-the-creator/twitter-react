@@ -10,6 +10,7 @@ import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
 import { TweetList } from '@/components/tweet-list';
 import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
+import { useGetTweetsByUserIdQuery } from '@/store/tweets/tweetsApi';
 
 import {
   HeaderInfo,
@@ -22,6 +23,8 @@ import {
 
 export const ProfilePage: React.FC = () => {
   const { uid, userProfile, isLoading } = useGetAuthProfile();
+
+  const { data: tweets, isLoading: isLoadingTweets } = useGetTweetsByUserIdQuery(uid);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,7 +39,7 @@ export const ProfilePage: React.FC = () => {
           <Header>
             <HeaderInfo>
               <HeaderName>{userProfile.name}</HeaderName>
-              <HeaderTweetCount>0 Tweets</HeaderTweetCount>
+              <HeaderTweetCount>{tweets?.length} Tweets</HeaderTweetCount>
             </HeaderInfo>
           </Header>
           <ProfileCover coverImage={userProfile.coverImage} />
@@ -59,7 +62,7 @@ export const ProfilePage: React.FC = () => {
           <ProfileTweets>Tweets</ProfileTweets>
 
           <TweetsWrapper>
-            <TweetList />
+            <TweetList tweets={tweets} isLoading={isLoadingTweets} />
           </TweetsWrapper>
         </>
       )}

@@ -1,22 +1,21 @@
-import { useSelector } from 'react-redux';
-
-import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
-import { useGetTweetsByUserIdQuery } from '@/store/tweets/tweetsApi';
+import { TweetResponse } from '@/types/tweet';
 
 import { CenteredLoader } from '../centered-loader';
-import { Tweet } from '../tweet';
+import { TweetItem } from '../tweet-item';
 
 import { TweetListContainer } from './tweet-list.styled';
 
-export const TweetList: React.FC = () => {
-  const { uid } = useSelector(selectAuthenticatedUser);
-  const { data: tweets, isLoading } = useGetTweetsByUserIdQuery(uid);
+type TweetListProps = {
+  tweets?: TweetResponse[];
+  isLoading?: boolean;
+};
 
+export const TweetList: React.FC<TweetListProps> = ({ tweets = [], isLoading }) => {
   if (isLoading) {
     return <CenteredLoader />;
   }
 
   return (
-    <TweetListContainer>{tweets?.map((tweet) => <Tweet key={tweet.id} {...tweet} />)}</TweetListContainer>
+    <TweetListContainer>{tweets?.map((tweet) => <TweetItem key={tweet.id} {...tweet} />)}</TweetListContainer>
   );
 };

@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import LikeIcon from '@/assets/images/icons/like-icon.svg?react';
 import MoreIcon from '@/assets/images/icons/more-outline-icon.svg?react';
-import { useAppDispatch } from '@/store/index';
+import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
+import { useAppDispatch, useAppSelector } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useGetProfileQuery } from '@/store/profile/profileApi';
 import { useDeleteTweetMutation } from '@/store/tweets/tweetsApi';
@@ -29,9 +30,9 @@ import {
   TweetHeader,
   TweetLoading,
   UserImageWrapper,
-} from './tweet.styled';
+} from './tweet-item.styled';
 
-type TweetProps = {
+type TweetItemProps = {
   id: string;
   content: string;
   imageUrls: string[];
@@ -39,7 +40,9 @@ type TweetProps = {
   timestamp: number;
 };
 
-export const Tweet: React.FC<TweetProps> = ({ id, content, imageUrls = [], userId, timestamp }) => {
+export const TweetItem: React.FC<TweetItemProps> = ({ id, content, imageUrls = [], userId, timestamp }) => {
+  const { uid: authUserId } = useAppSelector(selectAuthenticatedUser);
+
   const dispatch = useAppDispatch();
   const { data: userProfile, isLoading } = useGetProfileQuery(userId);
 
@@ -53,7 +56,7 @@ export const Tweet: React.FC<TweetProps> = ({ id, content, imageUrls = [], userI
     setIsDeletingLocal(true);
 
     try {
-      await deleteTweet(id);
+      await deleteTweet(id).unwrap();
 
       dispatch(addNotification({ type: 'success', message: 'Tweet deleted successfully' }));
     } catch (error) {
@@ -106,12 +109,14 @@ export const Tweet: React.FC<TweetProps> = ({ id, content, imageUrls = [], userI
             </TweetFooter>
           </Content>
 
-          <ActionsWrapper>
-            <ActionButton onClick={togglePopup}>
-              <MoreIcon />
-            </ActionButton>
-            <TweetPopup isOpen={isPopupOpen} onClose={togglePopup} onDelete={handleDelete} />
-          </ActionsWrapper>
+          {authUserId === userId && (
+            <ActionsWrapper>
+              <ActionButton onClick={togglePopup}>
+                <MoreIcon />
+              </ActionButton>
+              <TweetPopup isOpen={isPopupOpen} onClose={togglePopup} onDelete={handleDelete} />
+            </ActionsWrapper>
+          )}
         </Container>
       )}
     </TweetBox>
