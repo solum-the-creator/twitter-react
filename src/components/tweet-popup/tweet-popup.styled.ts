@@ -9,7 +9,7 @@ export const PopupWrapper = styled.div`
   border-radius: 0.5rem;
   padding: 0.5rem 0;
   width: 10rem;
-  z-index: 10;
+  z-index: 7;
 `;
 
 export const ActionItem = styled.button`

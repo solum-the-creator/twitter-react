@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useRef } from 'react';
 
 import CloseIcon from '@/assets/images/icons/close-icon.svg?react';
+import { useClickOutside } from '@/hooks/use-click-outside';
 
 import { Backdrop, CloseButton, Container, ModalContent, ModalHeader, ModalWrapper } from './modal.styled';
 
@@ -9,28 +9,22 @@ type ModalProps = {
   isOpen: boolean;
   children: React.ReactNode;
   header?: React.ReactNode;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, children, header, onClose }) => {
-  const [modalContainer] = useState(() => document.createElement('div'));
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    document.body.appendChild(modalContainer);
-
-    return () => {
-      document.body.removeChild(modalContainer);
-    };
-  }, [modalContainer]);
+  useClickOutside(modalRef, onClose, true);
 
   if (!isOpen) {
     return null;
   }
 
-  return createPortal(
+  return (
     <Container>
-      <Backdrop onClick={onClose} />
-      <ModalWrapper>
+      <Backdrop />
+      <ModalWrapper ref={modalRef}>
         <ModalHeader>
           <CloseButton onClick={onClose}>
             <CloseIcon />
@@ -39,7 +33,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, children, header, onClose 
         </ModalHeader>
         <ModalContent>{children}</ModalContent>
       </ModalWrapper>
-    </Container>,
-    modalContainer,
+    </Container>
   );
 };

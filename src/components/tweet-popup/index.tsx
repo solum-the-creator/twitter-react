@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { useClickOutside } from '@/hooks/use-click-outside';
+
+import { ConfirmModal } from '../confirm-modal';
 
 import { ActionItem, PopupWrapper } from './tweet-popup.styled';
 
@@ -11,14 +13,35 @@ type TweetPopupProps = {
 };
 
 export const TweetPopup: React.FC<TweetPopupProps> = ({ isOpen, onClose, onDelete }) => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
   const popupRef = useRef<HTMLDivElement>(null);
   useClickOutside(popupRef, onClose);
 
+  const handleConfirmClose = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleConfirm = () => {
+    setIsConfirmModalOpen(false);
+    onDelete();
+    onClose();
+  };
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    isOpen && (
-      <PopupWrapper ref={popupRef}>
-        <ActionItem onClick={onDelete}>Delete</ActionItem>
-      </PopupWrapper>
-    )
+    <PopupWrapper ref={popupRef}>
+      <ActionItem onClick={() => setIsConfirmModalOpen(true)}>Delete</ActionItem>
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        onClose={handleConfirmClose}
+        onConfirm={handleConfirm}
+        header="Delete Tweet"
+        text="This action cannot be undone and the post will be permanently removed from your profile, all your readers' feeds and search results."
+      />
+    </PopupWrapper>
   );
 };

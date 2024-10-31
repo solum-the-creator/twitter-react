@@ -49,7 +49,8 @@ export const ModalHeader = styled.div`
 
 export const ModalContent = styled.div`
   max-height: 30rem;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 `;
