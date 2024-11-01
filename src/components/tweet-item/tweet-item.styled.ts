@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -6,7 +7,7 @@ export const Container = styled.div`
   gap: 1rem;
 `;
 
-export const UserImageWrapper = styled.div`
+export const UserImageWrapper = styled(Link)`
   width: 3rem;
   height: 3rem;
 `;

@@ -1,5 +1,3 @@
-import testProfile from '@/assets/images/profile-image.png';
-
 import { Button } from '../ui/button';
 import { Link } from '../ui/link';
 import { ProfileImage } from '../ui/profile-image';
@@ -20,6 +18,7 @@ import {
 type ProfileBioProps = {
   name: string;
   email: string;
+  isOwnProfile: boolean;
   onEditProfile: () => void;
   bio?: string;
   telegramLink?: string;
@@ -29,6 +28,7 @@ type ProfileBioProps = {
 export const ProfileBio: React.FC<ProfileBioProps> = ({
   name,
   email,
+  isOwnProfile,
   onEditProfile,
   bio,
   telegramLink,
@@ -38,13 +38,15 @@ export const ProfileBio: React.FC<ProfileBioProps> = ({
     <Container>
       <TopBio>
         <ProfileImageWrapper>
-          <ProfileImage src={profileImage || testProfile} alt="Profile image" />
+          <ProfileImage src={profileImage} alt={name} />
         </ProfileImageWrapper>
-        <ActionsWrapper>
-          <Button variant="outline" size="small" onClick={onEditProfile}>
-            Edit profile
-          </Button>
-        </ActionsWrapper>
+        {isOwnProfile && (
+          <ActionsWrapper>
+            <Button variant="outline" size="small" onClick={onEditProfile}>
+              Edit profile
+            </Button>
+          </ActionsWrapper>
+        )}
       </TopBio>
       <Details>
         <UserName>{name}</UserName>

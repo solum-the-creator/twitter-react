@@ -3,5 +3,5 @@ export const paths = {
   login: '/login',
   signUp: '/sign-up',
   home: '/home',
-  profile: '/profile',
+  profile: '/profile/:userId',
 };

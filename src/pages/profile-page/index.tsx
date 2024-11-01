@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { CenteredLoader } from '@/components/centered-loader';
 import { EditProfileForm } from '@/components/edit-profile-form';
@@ -9,7 +11,8 @@ import { ProfileCover } from '@/components/profile-cover';
 import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
 import { TweetList } from '@/components/tweet-list';
-import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
+import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
+import { useGetProfileQuery } from '@/store/profile/profileApi';
 import { useGetTweetsByUserIdQuery } from '@/store/tweets/tweetsApi';
 
 import {
@@ -22,13 +25,19 @@ import {
 } from './profile.styled';
 
 export const ProfilePage: React.FC = () => {
-  const { uid, userProfile, isLoading } = useGetAuthProfile();
+  const { uid: authUserId } = useSelector(selectAuthenticatedUser);
+  const { userId } = useParams() as { userId: string };
 
-  const { data: tweets, isLoading: isLoadingTweets } = useGetTweetsByUserIdQuery(uid);
+  const isOwnProfile = useMemo(() => userId === authUserId, [userId, authUserId]);
+
+  const { data: userProfile, isFetching } = useGetProfileQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: tweets, isFetching: isLoadingTweets } = useGetTweetsByUserIdQuery(userId);
 
   const [openModal, setOpenModal] = useState(false);
 
-  if (isLoading) {
+  if (isFetching) {
     return <CenteredLoader />;
   }
 
@@ -39,7 +48,7 @@ export const ProfilePage: React.FC = () => {
           <Header>
             <HeaderInfo>
               <HeaderName>{userProfile.name}</HeaderName>
-              <HeaderTweetCount>{tweets?.length} Tweets</HeaderTweetCount>
+              <HeaderTweetCount>{tweets?.length && `${tweets.length} Tweets`} </HeaderTweetCount>
             </HeaderInfo>
           </Header>
           <ProfileCover coverImage={userProfile.coverImage} />
@@ -49,15 +58,24 @@ export const ProfilePage: React.FC = () => {
             bio={userProfile.bio}
             telegramLink={userProfile.telegramLink}
             profileImage={userProfile.profileImage}
+            isOwnProfile={isOwnProfile}
             onEditProfile={() => setOpenModal(true)}
           />
-          <Modal isOpen={openModal} onClose={() => setOpenModal(false)} header="Edit profile">
-            <EditProfileForm uid={uid} initialValues={userProfile} onSuccess={() => setOpenModal(false)} />
-          </Modal>
+          {isOwnProfile && (
+            <Modal isOpen={openModal} onClose={() => setOpenModal(false)} header="Edit profile">
+              <EditProfileForm
+                uid={userId}
+                initialValues={userProfile}
+                onSuccess={() => setOpenModal(false)}
+              />
+            </Modal>
+          )}
 
-          <TweetBox>
-            <TweetForm />
-          </TweetBox>
+          {isOwnProfile && (
+            <TweetBox>
+              <TweetForm />
+            </TweetBox>
+          )}
 
           <ProfileTweets>Tweets</ProfileTweets>
 

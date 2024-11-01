@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AuthRoute } from '@/components/routes/auth-route';
 import { UnauthRoute } from '@/components/routes/unauth-route';
@@ -20,8 +20,9 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<AuthRoute />}>
           <Route element={<MainLayout />}>
-            <Route path={paths.home} element={<HomePage />} />
             <Route path={paths.profile} element={<ProfilePage />} />
+            <Route path={paths.home} element={<HomePage />} />
+            <Route path="*" element={<Navigate to={paths.home} replace={true} />} />
           </Route>
         </Route>
         <Route element={<UnauthRoute />}>

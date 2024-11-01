@@ -19,15 +19,14 @@ const variantStyles = {
     }
   `,
   secondary: css`
-    color: #0f1419;
-    text-decoration: none;
+    color: ${({ theme }) => theme.colors.primaryText};
 
     &:hover {
-      color: #657786;
+      text-decoration: underline;
     }
 
     &:disabled {
-      color: #cfd9de;
+      color: ${({ theme }) => theme.colors.primaryTextDisabled};
       cursor: not-allowed;
       pointer-events: none;
     }

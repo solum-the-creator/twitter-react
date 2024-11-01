@@ -8,12 +8,14 @@ import { useGetProfileQuery } from '@/store/profile/profileApi';
 import { useDeleteTweetMutation } from '@/store/tweets/tweetsApi';
 import { Likes } from '@/types/tweet';
 import { formatShortDate } from '@/utils/date-utils';
+import { getProfilePath } from '@/utils/paths-utils';
 
 import { CenteredLoader } from '../centered-loader';
 import { ImagesPreview } from '../images-preview';
 import { Like } from '../like';
 import { TweetBox } from '../tweet-box';
 import { TweetPopup } from '../tweet-popup';
+import { Link } from '../ui/link';
 import { ProfileImage } from '../ui/profile-image';
 
 import {
@@ -95,12 +97,14 @@ export const TweetItem: React.FC<TweetItemProps> = ({
     <TweetBox>
       {userProfile && (
         <Container>
-          <UserImageWrapper>
+          <UserImageWrapper to={getProfilePath(userId)}>
             <ProfileImage size={48} src={userProfile.profileImage} alt={userProfile.name} />
           </UserImageWrapper>
           <Content>
             <TweetHeader>
-              <Name>{userProfile.name}</Name>
+              <Link to={getProfilePath(userId)} variant="secondary">
+                <Name>{userProfile.name}</Name>
+              </Link>
               <MetaInfo>· {formatShortDate(timestamp)}</MetaInfo>
             </TweetHeader>
 
