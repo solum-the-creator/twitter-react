@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { allowedFormats, maxImageCount, maxImageSizeMB, tweetLength } from '@/constants/tweets';
@@ -27,7 +27,11 @@ import {
   UserImageWrapper,
 } from './tweet-form.styled';
 
-export const TweetForm: React.FC = () => {
+type TweetFormProps = {
+  onSuccess?: () => void;
+};
+
+export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
   const dispatch = useAppDispatch();
   const { userProfile } = useGetAuthProfile();
 
@@ -35,6 +39,8 @@ export const TweetForm: React.FC = () => {
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const tweetImageInputId = useId();
 
   const isEmpty = content.trim().length === 0;
   const maxImageCountReached = selectedImages.length >= maxImageCount;
@@ -91,6 +97,7 @@ export const TweetForm: React.FC = () => {
       try {
         await addTweet({ content: content.trim(), imageFiles: selectedImages });
         dispatch(addNotification({ type: 'success', message: 'Tweet added successfully' }));
+        onSuccess?.();
         setContent('');
         setSelectedImages([]);
         setImageUrls([]);
@@ -123,13 +130,13 @@ export const TweetForm: React.FC = () => {
 
         <Actions>
           <ActionButton disabled={maxImageCountReached}>
-            <ImageLabel htmlFor="tweetImageInput" disabled={maxImageCountReached}>
+            <ImageLabel htmlFor={tweetImageInputId} disabled={maxImageCountReached}>
               <ImageIcon fill={maxImageCountReached ? theme.colors.accentDisabled : theme.colors.accent} />
             </ImageLabel>
           </ActionButton>
 
           <input
-            id="tweetImageInput"
+            id={tweetImageInputId}
             type="file"
             accept={allowedFormats.join(',')}
             multiple

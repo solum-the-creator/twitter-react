@@ -40,3 +40,9 @@ export const BottomSection = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+
+export const TweetButtonWrapper = styled.div`
+  width: 100%;
+  min-width: 8rem;
+  display: flex;
+`;
