@@ -15,6 +15,8 @@ export const AvatarContainer = styled.div`
 
 export const AvatarPreview = styled.div`
   filter: brightness(0.8);
+  width: 100%;
+  height: 100%;
 `;
 
 export const AvatarActions = styled.div`
