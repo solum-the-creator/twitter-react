@@ -7,6 +7,8 @@ export const theme = {
     secondaryText: '#666666',
     backgroundGray: '#E6E6E6',
     backgroundGrayDark: '#B3B8BB',
+    backgroundGrayLight: '#EFF3F4',
+    backgroundGrayLighter: '#F7F7F7',
     accent: '#1DA1F2',
     accentHover: '#DEF2FF',
     accentActive: '#0D8DE1',

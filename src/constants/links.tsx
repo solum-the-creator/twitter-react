@@ -36,6 +36,15 @@ export const footerLinks = [
   { label: '© 2024 Twitter, Inc.', href: '/copyright' },
 ];
 
+export const rightFooterLinks = [
+  { label: 'Terms of Service', href: '/terms' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Cookie Policy', href: '/cookie' },
+  { label: 'Help Center', href: '/help' },
+  { label: 'Ads Info', href: '/ads' },
+  { label: '© 2024 Twitter, Inc.', href: '/copyright' },
+];
+
 export const privacyLinks = {
   terms: 'https://twitter.com/en/tos',
   privacy: 'https://twitter.com/en/privacy',
