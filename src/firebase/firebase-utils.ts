@@ -14,9 +14,11 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
   setDoc,
+  startAfter,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -131,7 +133,7 @@ export const updateUserProfile = async (
   }
 };
 
-export const addTweet = async (content: string, imageFiles: File[] = []): Promise<string> => {
+export const addTweet = async (content: string, imageFiles: File[] = []): Promise<TweetResponse> => {
   const { currentUser } = auth;
 
   if (!currentUser) {
@@ -156,7 +158,10 @@ export const addTweet = async (content: string, imageFiles: File[] = []): Promis
   };
 
   const tweetRef = await addDoc(collection(db, 'tweets'), newTweet);
-  return tweetRef.id;
+  return {
+    id: tweetRef.id,
+    ...newTweet,
+  };
 };
 
 export const getTweetsByUserId = async (userId: string): Promise<TweetResponse[]> => {
@@ -185,6 +190,58 @@ export const getAllTweets = async (): Promise<TweetResponse[]> => {
     return tweets;
   } catch (error) {
     console.error('Error fetching tweets:', error);
+    throw error;
+  }
+};
+
+export const getAllTweetsWithPagination = async (
+  limitCount: number,
+  lastVisibleTweetId?: string,
+): Promise<{ tweets: TweetResponse[]; lastVisibleId: string | null }> => {
+  try {
+    const tweetsRef = collection(db, 'tweets');
+    let q = query(tweetsRef, orderBy('timestamp', 'desc'), limit(limitCount));
+
+    if (lastVisibleTweetId) {
+      const lastVisibleDoc = await getDoc(doc(tweetsRef, lastVisibleTweetId));
+      q = query(q, startAfter(lastVisibleDoc));
+    }
+
+    const querySnapshot = await getDocs(q);
+    const tweets = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as TweetResponse);
+    const lastVisibleId = querySnapshot.docs.length
+      ? querySnapshot.docs[querySnapshot.docs.length - 1].id
+      : null;
+
+    return { tweets, lastVisibleId };
+  } catch (error) {
+    console.error('Error fetching tweets:', error);
+    throw error;
+  }
+};
+
+export const getPaginatedTweets = async (
+  pageSize: number,
+  lastTweetId: string | null,
+): Promise<{ tweets: TweetResponse[]; lastVisibleId: string | null }> => {
+  try {
+    const tweetsRef = collection(db, 'tweets');
+    let q = query(tweetsRef, orderBy('timestamp', 'desc'), limit(pageSize));
+
+    if (lastTweetId) {
+      const lastTweetDoc = await getDoc(doc(db, 'tweets', lastTweetId));
+      q = query(q, startAfter(lastTweetDoc));
+    }
+
+    const querySnapshot = await getDocs(q);
+    const tweets = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as TweetResponse);
+
+    const lastVisibleId =
+      querySnapshot.docs.length > 0 ? querySnapshot.docs[querySnapshot.docs.length - 1].id : null;
+
+    return { tweets, lastVisibleId };
+  } catch (error) {
+    console.error('Error fetching paginated tweets:', error);
     throw error;
   }
 };

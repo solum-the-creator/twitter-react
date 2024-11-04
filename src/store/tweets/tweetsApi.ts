@@ -4,6 +4,7 @@ import {
   addTweet,
   deleteTweet,
   getAllTweets,
+  getPaginatedTweets,
   getTweetsByUserId,
   toggleLikeTweet,
 } from '@/firebase/firebase-utils';
@@ -15,11 +16,11 @@ export const tweetsApi = createApi({
   baseQuery: fakeBaseQuery(),
   tagTypes: ['Tweet'],
   endpoints: (builder) => ({
-    addTweet: builder.mutation<string, { content: string; imageFiles: File[] }>({
+    addTweet: builder.mutation<TweetResponse, { content: string; imageFiles: File[] }>({
       queryFn: async ({ content, imageFiles }) => {
         try {
-          const tweetId = await addTweet(content, imageFiles);
-          return { data: tweetId };
+          const tweet = await addTweet(content, imageFiles);
+          return { data: tweet };
         } catch (error) {
           if (isFirebaseError(error)) {
             const errorMessage = getFirebaseErrorMessage(error);
@@ -27,6 +28,18 @@ export const tweetsApi = createApi({
           }
           return { error: { message: 'An unexpected error occurred while adding the tweet.' } };
         }
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        const { data: newTweet } = await queryFulfilled;
+        dispatch(
+          tweetsApi.util.updateQueryData(
+            'getPaginatedTweets',
+            { pageSize: 5, lastTweetId: null },
+            (draft) => {
+              draft.tweets.unshift(newTweet);
+            },
+          ),
+        );
       },
       invalidatesTags: [{ type: 'Tweet', id: 'LIST' }],
     }),
@@ -57,6 +70,35 @@ export const tweetsApi = createApi({
           }
           return { error: { message: 'An unexpected error occurred while fetching the tweets.' } };
         }
+      },
+      providesTags: [{ type: 'Tweet', id: 'LIST' }],
+    }),
+    getPaginatedTweets: builder.query<
+      { tweets: TweetResponse[]; lastVisibleId: string | null },
+      { pageSize: number; lastTweetId: string | null }
+    >({
+      queryFn: async ({ pageSize, lastTweetId }) => {
+        try {
+          const { tweets, lastVisibleId } = await getPaginatedTweets(pageSize, lastTweetId);
+          return { data: { tweets, lastVisibleId } };
+        } catch (error) {
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred while fetching the tweets.' } };
+        }
+      },
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newTweets, { arg }) => {
+        if (arg.lastTweetId === null) {
+          return;
+        }
+        currentCache.tweets.push(...newTweets.tweets);
+        currentCache.lastVisibleId = newTweets.lastVisibleId;
+      },
+      forceRefetch: ({ currentArg, previousArg }) => {
+        return currentArg?.lastTweetId !== previousArg?.lastTweetId;
       },
       providesTags: [{ type: 'Tweet', id: 'LIST' }],
     }),
@@ -99,4 +141,6 @@ export const {
   useDeleteTweetMutation,
   useGetAllTweetsQuery,
   useToggleLikeTweetMutation,
+  useGetPaginatedTweetsQuery,
+  useLazyGetPaginatedTweetsQuery,
 } = tweetsApi;

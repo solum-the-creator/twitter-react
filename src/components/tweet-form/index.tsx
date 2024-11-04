@@ -7,6 +7,7 @@ import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useAddTweetMutation } from '@/store/tweets/tweetsApi';
 import { theme } from '@/styles/theme';
+import { TweetResponse } from '@/types/tweet';
 import { validateFiles } from '@/utils/file-validations-utils';
 
 import { ImagesPreview } from '../images-preview';
@@ -28,7 +29,7 @@ import {
 } from './tweet-form.styled';
 
 type TweetFormProps = {
-  onSuccess?: () => void;
+  onSuccess?: (tweet: TweetResponse) => void;
 };
 
 export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
@@ -95,9 +96,9 @@ export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
   const handleTweetSubmit = async () => {
     if (content.trim() || selectedImages.length) {
       try {
-        await addTweet({ content: content.trim(), imageFiles: selectedImages });
+        const tweet = await addTweet({ content: content.trim(), imageFiles: selectedImages }).unwrap();
         dispatch(addNotification({ type: 'success', message: 'Tweet added successfully' }));
-        onSuccess?.();
+        onSuccess?.(tweet);
         setContent('');
         setSelectedImages([]);
         setImageUrls([]);
