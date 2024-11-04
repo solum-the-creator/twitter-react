@@ -24,7 +24,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { Likes, Tweet, TweetResponse } from '@/types/tweet';
 import { StorageDirectory } from '@/types/types';
-import { SignUpWithEmailData, UserProfile } from '@/types/user';
+import { SignUpWithEmailData, UserProfile, UserProfileWithId } from '@/types/user';
 
 import { auth, db, storage } from './config';
 
@@ -232,4 +232,14 @@ export const toggleLikeTweet = async (tweetId: string, userId: string): Promise<
       likesBy: updatedLikesBy,
     },
   });
+};
+
+export const searchUsers = async (searchTerm: string): Promise<UserProfileWithId[]> => {
+  const usersRef = collection(db, 'users');
+  const q = query(usersRef, where('name', '>=', searchTerm), where('name', '<=', `${searchTerm}\uf8ff`));
+
+  const querySnapshot = await getDocs(q);
+  const users = querySnapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }) as UserProfileWithId);
+
+  return users;
 };

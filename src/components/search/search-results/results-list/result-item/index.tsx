@@ -1,5 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Link } from '@/components/ui/link';
 import { ProfileImage } from '@/components/ui/profile-image';
+import { getProfilePath } from '@/utils/paths-utils';
 
 import {
   ResultContent,
@@ -9,17 +12,32 @@ import {
   ResultName,
 } from './result-item.styled';
 
-export const ResultItem: React.FC = () => {
+type ResultItemProps = {
+  id: string;
+  name: string;
+  email: string;
+  profileImage?: string;
+};
+
+export const ResultItem: React.FC<ResultItemProps> = ({ id, name, email, profileImage }) => {
+  const navigate = useNavigate();
+
+  const profilePath = getProfilePath(id);
+
+  const onClick = () => {
+    navigate(profilePath);
+  };
+
   return (
-    <ResultItemContainer>
+    <ResultItemContainer onClick={onClick}>
       <ResultImageWrapper>
-        <ProfileImage size={50} />
+        <ProfileImage size={50} src={profileImage} alt={name} />
       </ResultImageWrapper>
       <ResultContent>
-        <Link to="/" variant="secondary">
-          <ResultName>John Doe</ResultName>
+        <Link to={profilePath} variant="secondary">
+          <ResultName>{name}</ResultName>
         </Link>
-        <ResultEmail>dexs.kostukevi4@mail.ru</ResultEmail>
+        <ResultEmail>{email}</ResultEmail>
       </ResultContent>
     </ResultItemContainer>
   );

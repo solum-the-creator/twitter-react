@@ -1,11 +1,27 @@
-import { ResultsList } from './results-list';
-import { ResultsHeader, SearchResultsContainer } from './search-results.styled';
+import { CenteredLoader } from '@/components/centered-loader';
+import { UserProfileWithId } from '@/types/user';
 
-export const SearchResults: React.FC = () => {
+import { ResultsList } from './results-list';
+import { EmptyResults, ResultsHeader, SearchResultsContainer } from './search-results.styled';
+
+type SearchResultsProps = {
+  users: UserProfileWithId[];
+  isLoading: boolean;
+};
+
+export const SearchResults: React.FC<SearchResultsProps> = ({ users, isLoading }) => {
+  const isEmpty = users.length === 0;
+
   return (
     <SearchResultsContainer>
       <ResultsHeader>Search Results</ResultsHeader>
-      <ResultsList />
+      {isLoading ? (
+        <CenteredLoader />
+      ) : isEmpty ? (
+        <EmptyResults>No results found</EmptyResults>
+      ) : (
+        <ResultsList users={users} />
+      )}
     </SearchResultsContainer>
   );
 };

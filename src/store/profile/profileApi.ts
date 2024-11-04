@@ -1,7 +1,7 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { fetchUserProfile, updateUserProfile } from '@/firebase/firebase-utils';
-import { UpdateProfileRequest, UserProfile } from '@/types/user';
+import { fetchUserProfile, searchUsers, updateUserProfile } from '@/firebase/firebase-utils';
+import { UpdateProfileRequest, UserProfile, UserProfileWithId } from '@/types/user';
 import { getFirebaseErrorMessage, isFirebaseError } from '@/utils/errors-utils';
 
 export const profileApi = createApi({
@@ -43,7 +43,22 @@ export const profileApi = createApi({
       },
       invalidatesTags: (_, _error, { uid }) => [{ type: 'UserProfile', id: uid }],
     }),
+
+    searchUsers: builder.query<UserProfileWithId[], string>({
+      queryFn: async (query) => {
+        try {
+          const users = await searchUsers(query);
+          return { data: users };
+        } catch (error) {
+          if (isFirebaseError(error)) {
+            const errorMessage = getFirebaseErrorMessage(error);
+            return { error: { message: errorMessage } };
+          }
+          return { error: { message: 'An unexpected error occurred while searching users.' } };
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;
+export const { useGetProfileQuery, useUpdateProfileMutation, useSearchUsersQuery } = profileApi;

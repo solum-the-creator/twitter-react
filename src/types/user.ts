@@ -9,6 +9,10 @@ export type UserProfile = {
   coverImage?: string;
 };
 
+export type UserProfileWithId = UserProfile & {
+  uid: string;
+};
+
 export type SignUpFormData = Pick<UserProfile, 'name' | 'email' | 'phone'> & {
   password: string;
   month: number;
