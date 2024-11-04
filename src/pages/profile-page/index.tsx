@@ -37,6 +37,8 @@ export const ProfilePage: React.FC = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
+  const tweetsLength = useMemo(() => tweets?.length || 0, [tweets]);
+
   if (isFetching) {
     return <CenteredLoader />;
   }
@@ -48,7 +50,7 @@ export const ProfilePage: React.FC = () => {
           <Header>
             <HeaderInfo>
               <HeaderName>{userProfile.name}</HeaderName>
-              <HeaderTweetCount>{tweets?.length && `${tweets.length} Tweets`} </HeaderTweetCount>
+              <HeaderTweetCount>{tweetsLength > 0 && `${tweetsLength} Tweets`} </HeaderTweetCount>
             </HeaderInfo>
           </Header>
           <ProfileCover coverImage={userProfile.coverImage} />
