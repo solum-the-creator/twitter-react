@@ -8,6 +8,10 @@ export const Container = styled.div`
   align-items: center;
 
   min-height: 100vh;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 export const Section = styled.section`
@@ -37,6 +41,10 @@ export const FormTitle = styled.h1`
   font-size: 2.6rem;
   font-weight: 900;
   color: ${({ theme }) => theme.colors.primaryText};
+
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 export const ControlGroup = styled.div`

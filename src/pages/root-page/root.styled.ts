@@ -13,12 +13,21 @@ export const Container = styled.div`
 export const ContentContainer = styled.div`
   display: grid;
   grid-template-columns: 7fr 5fr;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ImageContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const BackgroundImage = styled.img`
@@ -26,12 +35,17 @@ export const BackgroundImage = styled.img`
 `;
 
 export const Column = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 
   padding: 4rem 2.75rem;
+
+  @media screen and (max-width: 1024px) {
+    align-items: center;
+  }
 `;
 
 export const Title = styled.h1`
@@ -39,6 +53,14 @@ export const Title = styled.h1`
   font-weight: 900;
 
   margin-bottom: 2.5rem;
+
+  @media screen and (max-width: 1024px) {
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 3.5rem;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -46,6 +68,10 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: flex-start;
   margin-bottom: 3.5rem;
+
+  @media screen and (max-width: 1024px) {
+    justify-content: center;
+  }
 `;
 
 export const SignUpContainer = styled.div`

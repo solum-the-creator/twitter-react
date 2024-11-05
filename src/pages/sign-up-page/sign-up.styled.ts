@@ -8,6 +8,10 @@ export const Container = styled.div`
   align-items: center;
 
   min-height: 100vh;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 export const Section = styled.section`
@@ -18,6 +22,11 @@ export const Section = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 2.5rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
 `;
 
 export const SignUpForm = styled.form`
@@ -25,6 +34,10 @@ export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+
+  @media screen and (max-width: 768px) {
+    gap: 1.5rem;
+  }
 `;
 
 export const FormTitle = styled.h1`
@@ -32,6 +45,10 @@ export const FormTitle = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.primaryText};
+
+  @media screen and (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 export const InputGroup = styled.div`
@@ -46,6 +63,10 @@ export const DateOfBirthGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media screen and (max-width: 768px) {
+    gap: 1rem;
+  }
 `;
 
 export const DateOfBirthTitle = styled.h3`
@@ -65,4 +86,9 @@ export const SelectGroup = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 1.3rem;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
