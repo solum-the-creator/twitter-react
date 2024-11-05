@@ -4,11 +4,19 @@ export const TweetFormWrapper = styled.div`
   width: 100%;
   display: flex;
   gap: 1rem;
+
+  @media screen and (max-width: 576px) {
+    flex-direction: column;
+  }
 `;
 
 export const UserImageWrapper = styled.div`
   width: 3rem;
   height: 3rem;
+
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
 `;
 
 export const InputSection = styled.div`

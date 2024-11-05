@@ -99,7 +99,7 @@ export const TweetItem: React.FC<TweetItemProps> = ({
       {userProfile && (
         <Container>
           <UserImageWrapper to={getProfilePath(userId)}>
-            <ProfileImage size={48} src={userProfile.profileImage} alt={userProfile.name} />
+            <ProfileImage src={userProfile.profileImage} alt={userProfile.name} />
           </UserImageWrapper>
           <Content>
             <TweetHeader>

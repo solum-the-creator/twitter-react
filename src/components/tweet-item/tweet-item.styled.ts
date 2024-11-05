@@ -5,11 +5,21 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   gap: 1rem;
+
+  @media screen and (max-width: 576px) {
+    gap: 0.5rem;
+  }
 `;
 
 export const UserImageWrapper = styled(Link)`
-  width: 3rem;
-  height: 3rem;
+  width: 100%;
+  max-width: 3rem;
+  max-height: 3rem;
+
+  @media screen and (max-width: 576px) {
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -45,6 +55,13 @@ export const ActionButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors.accentHover};
   }
+
+  @media screen and (max-width: 576px) {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    padding: 0;
+  }
 `;
 
 export const TweetHeader = styled.div`
@@ -58,11 +75,24 @@ export const TweetHeader = styled.div`
 export const Name = styled.span`
   font-weight: 700;
   font-size: 1.25rem;
+
+  @media screen and (max-width: 576px) {
+    max-width: 10rem;
+    font-size: 1rem;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const MetaInfo = styled.span`
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: 1.125rem;
+
+  @media screen and (max-width: 576px) {
+    font-size: 0.875rem;
+  }
 `;
 
 export const Text = styled.p`
@@ -72,6 +102,10 @@ export const Text = styled.p`
 
   margin-bottom: 0.5rem;
   word-break: break-word;
+
+  @media screen and (max-width: 576px) {
+    font-size: 1rem;
+  }
 `;
 
 export const TweetFooter = styled.div`
@@ -111,6 +145,10 @@ export const Like = styled.div<{ $liked: boolean }>`
 export const LikeCount = styled.span`
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: 1.125rem;
+
+  @media screen and (max-width: 576px) {
+    font-size: 1rem;
+  }
 `;
 
 export const TweetLoading = styled.div`

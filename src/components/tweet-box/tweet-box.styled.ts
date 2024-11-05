@@ -7,4 +7,8 @@ export const TweetBoxStyled = styled.div`
   justify-content: center;
   padding: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.stroke};
+
+  @media screen and (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;

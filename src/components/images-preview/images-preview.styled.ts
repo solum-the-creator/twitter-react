@@ -36,6 +36,25 @@ export const ImagePreviewStyled = styled.div<{ $imagesCount: number }>`
         grid-column: span 2;
       }
     `}
+
+  @media screen and (max-width: 576px) {
+    &:nth-child(1) {
+      grid-row: 1;
+      grid-column: span 2;
+    }
+    &:nth-child(2) {
+      grid-row: 2;
+      grid-column: span 2;
+    }
+    &:nth-child(3) {
+      grid-row: 3;
+      grid-column: span 2;
+    }
+    &:nth-child(4) {
+      grid-row: 4;
+      grid-column: span 2;
+    }
+  }
 `;
 
 export const Image = styled.img`

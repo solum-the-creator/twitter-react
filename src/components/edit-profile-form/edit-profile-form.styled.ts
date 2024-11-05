@@ -4,6 +4,10 @@ export const FormContainer = styled.form`
   width: 38rem;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+  }
 `;
 
 export const CoverImageWrapper = styled.div`

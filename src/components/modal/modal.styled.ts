@@ -22,6 +22,10 @@ export const ModalWrapper = styled.div`
   min-height: 10rem;
   border-radius: 1rem;
   overflow: hidden;
+
+  @media screen and (max-width: 576px) {
+    min-width: 100%;
+  }
 `;
 
 export const CloseWrapper = styled.div`
