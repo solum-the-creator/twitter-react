@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import LogoutIcon from '@/assets/images/icons/logout-icon.svg?react';
+import TweetIcon from '@/assets/images/icons/tweet-icon.svg?react';
 import { paths } from '@/constants/paths';
 import { useLogoutMutation } from '@/store/auth/authApi';
 import { useAppDispatch } from '@/store/index';
@@ -9,14 +11,17 @@ import { addNotification } from '@/store/notification/notificationSlice';
 import { ConfirmModal } from '../confirm-modal';
 import { TweetModal } from '../tweet-modal';
 import { Button } from '../ui/button';
+import { IconWrapper } from '../ui/icon-wrapper';
 import { Logo } from '../ui/logo';
 
 import {
   BottomSection,
+  ButtonIconWrapper,
+  ButtonText,
+  ButtonWrapper,
   SidebarContainer,
   SidebarLogo,
   SidebarMenuWrapper,
-  TweetButtonWrapper,
 } from './sidebar.styled';
 import { SidebarMenu } from './sidebar-menu';
 import { SidebarProfile } from './sidebar-profile';
@@ -55,18 +60,30 @@ export const Sidebar: React.FC = () => {
         </SidebarLogo>
         <SidebarMenu />
 
-        <TweetButtonWrapper>
+        <ButtonWrapper>
           <Button variant="primary" onClick={handleTweetOpen} fullWidth={true}>
-            Tweet
+            <ButtonIconWrapper>
+              <IconWrapper icon={TweetIcon} />
+            </ButtonIconWrapper>
+            <ButtonText>Tweet</ButtonText>
           </Button>
           <TweetModal isOpen={isTweetModalOpen} onClose={handleTweetClose} />
-        </TweetButtonWrapper>
+        </ButtonWrapper>
       </SidebarMenuWrapper>
       <BottomSection>
         <SidebarProfile />
-        <Button variant="secondary" onClick={() => setIsLogoutConfirmOpen(true)} isLoading={isLoading}>
-          Log out
-        </Button>
+        <ButtonWrapper>
+          <Button
+            variant="secondary"
+            onClick={() => setIsLogoutConfirmOpen(true)}
+            isLoading={isLoading}
+            fullWidth={true}>
+            <ButtonIconWrapper>
+              <IconWrapper icon={LogoutIcon} />
+            </ButtonIconWrapper>
+            <ButtonText>Log out</ButtonText>
+          </Button>
+        </ButtonWrapper>
         <ConfirmModal
           isOpen={isLogoutConfirmOpen}
           onClose={() => setIsLogoutConfirmOpen(false)}

@@ -4,13 +4,17 @@ export const ProfileContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 0.5rem;
-  border-radius: 3rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.accentHover};
+  }
+
+  @media screen and (max-width: 992px) {
+    padding: 0;
   }
 `;
 
@@ -21,8 +25,8 @@ export const AvatarWrapper = styled.div`
 `;
 
 export const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
   border-radius: 50%;
   object-fit: cover;
 `;
@@ -30,7 +34,11 @@ export const Avatar = styled.img`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
+
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
 `;
 
 export const UserName = styled.span`
@@ -40,7 +48,12 @@ export const UserName = styled.span`
 `;
 
 export const UserEmail = styled.span`
+  max-width: 12rem;
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: 0.875rem;
   font-weight: 400;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;

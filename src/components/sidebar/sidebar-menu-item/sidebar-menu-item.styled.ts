@@ -9,6 +9,10 @@ export const MenuItemWrapper = styled.div`
   gap: 1rem;
 
   transition: background-color 0.2s ease-in-out;
+
+  @media (max-width: 992px) {
+    padding: 0.75rem;
+  }
 `;
 
 export const IconContainer = styled.div`
@@ -20,7 +24,7 @@ export const IconContainer = styled.div`
 `;
 
 export const Label = styled.span`
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     display: none;
   }
 `;
@@ -45,5 +49,9 @@ export const MenuItemLink = styled(NavLink)`
     ${MenuItemWrapper} {
       background-color: ${({ theme }) => theme.colors.accentHover};
     }
+  }
+
+  @media (max-width: 992px) {
+    justify-content: center;
   }
 `;

@@ -14,11 +14,15 @@ export const Content = styled.div`
 
 export const SidebarWrapper = styled.div`
   flex: 1;
-  max-width: 20rem;
+  max-width: 18rem;
   background-color: ${({ theme }) => theme.colors.primary};
   height: 100vh;
   position: sticky;
   top: 0;
+
+  @media screen and (max-width: 992px) {
+    max-width: 4.5rem;
+  }
 `;
 
 export const MainContent = styled.main`
@@ -37,4 +41,8 @@ export const RightSidebarWrapper = styled.div`
   height: 100vh;
   position: sticky;
   top: 0;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;

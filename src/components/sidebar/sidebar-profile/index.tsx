@@ -17,7 +17,7 @@ export const SidebarProfile: React.FC = () => {
 
   return (
     <ProfileContainer>
-      <ProfileImage size={50} src={profileImg} alt={name} />
+      <ProfileImage size={45} src={profileImg} alt={name} />
       <UserInfo>
         <UserName>{name}</UserName>
         <UserEmail>{userProfile?.email}</UserEmail>
