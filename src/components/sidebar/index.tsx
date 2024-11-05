@@ -50,6 +50,14 @@ export const Sidebar: React.FC = () => {
     setIsTweetModalOpen(false);
   };
 
+  const handleLogoutOpen = () => {
+    setIsLogoutConfirmOpen(true);
+  };
+
+  const handleLogoutClose = () => {
+    setIsLogoutConfirmOpen(false);
+  };
+
   return (
     <SidebarContainer>
       <SidebarMenuWrapper>
@@ -73,11 +81,7 @@ export const Sidebar: React.FC = () => {
       <BottomSection>
         <SidebarProfile />
         <ButtonWrapper>
-          <Button
-            variant="secondary"
-            onClick={() => setIsLogoutConfirmOpen(true)}
-            isLoading={isLoading}
-            fullWidth={true}>
+          <Button variant="secondary" onClick={handleLogoutOpen} isLoading={isLoading} fullWidth={true}>
             <ButtonIconWrapper>
               <IconWrapper icon={LogoutIcon} />
             </ButtonIconWrapper>
@@ -86,7 +90,7 @@ export const Sidebar: React.FC = () => {
         </ButtonWrapper>
         <ConfirmModal
           isOpen={isLogoutConfirmOpen}
-          onClose={() => setIsLogoutConfirmOpen(false)}
+          onClose={handleLogoutClose}
           onConfirm={handleLogout}
           text="Are you sure you want to log out?"
           header="Log out"

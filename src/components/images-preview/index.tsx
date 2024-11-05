@@ -8,7 +8,7 @@ type ImagesPreviewProps = {
 };
 
 export const ImagesPreview: React.FC<ImagesPreviewProps> = ({ images, onRemove }) => {
-  const handleRemove = (url: string) => onRemove?.(url);
+  const handleRemove = (url: string) => () => onRemove?.(url);
 
   return (
     <PreviewContainer $imagesCount={images.length}>
@@ -18,7 +18,7 @@ export const ImagesPreview: React.FC<ImagesPreviewProps> = ({ images, onRemove }
 
           {onRemove && (
             <RemoveButtonWrapper>
-              <RemoveButton onClick={() => handleRemove(url)} />
+              <RemoveButton onClick={handleRemove(url)} />
             </RemoveButtonWrapper>
           )}
         </ImagePreviewStyled>

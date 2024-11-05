@@ -35,7 +35,7 @@ export const RootPage: React.FC = () => {
 
   const navigate = useNavigate();
   const onSignUpWithEmailClick = () => {
-    navigate('/sign-up');
+    navigate(paths.signUp);
   };
 
   const handleLoginWithGoogle = async () => {

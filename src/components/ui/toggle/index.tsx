@@ -6,9 +6,13 @@ type ToggleProps = {
 };
 
 export const Toggle: React.FC<ToggleProps> = ({ checked, onChange }) => {
+  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.checked);
+  };
+
   return (
     <ToggleContainer>
-      <ToggleInput type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <ToggleInput type="checkbox" checked={checked} onChange={handleToggle} />
       <ToggleSlider $checked={checked} />
     </ToggleContainer>
   );

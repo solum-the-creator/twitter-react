@@ -35,13 +35,17 @@ export const TweetPopup: React.FC<TweetPopupProps> = ({ isOpen, onClose, onDelet
     onClose();
   };
 
+  const handleDeleteClick = () => {
+    setIsConfirmModalOpen(true);
+  };
+
   if (!isOpen) {
     return null;
   }
 
   return (
     <PopupWrapper ref={popupRef}>
-      <ActionItem onClick={() => setIsConfirmModalOpen(true)}>Delete</ActionItem>
+      <ActionItem onClick={handleDeleteClick}>Delete</ActionItem>
       <ConfirmModal
         isOpen={isConfirmModalOpen}
         onClose={handleConfirmClose}

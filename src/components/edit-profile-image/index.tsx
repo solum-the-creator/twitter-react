@@ -50,7 +50,7 @@ export const EditProfileImage: React.FC<EditProfileImageProps> = ({ profileUrl, 
     <AvatarContainer>
       {avatarImage && (
         <AvatarPreview>
-          <ProfileImage src={avatarImage} alt="Profile image" />
+          <ProfileImage src={avatarImage} />
         </AvatarPreview>
       )}
       <AvatarActions>

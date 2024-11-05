@@ -8,14 +8,13 @@ type SearchBarProps = {
 };
 
 export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  };
+
   return (
     <SearchBarContainer>
-      <SearchInput
-        type="text"
-        placeholder="Search User"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <SearchInput type="text" placeholder="Search User" value={value} onChange={handleSearch} />
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

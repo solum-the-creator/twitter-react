@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { menuLinks } from '@/constants/links';
+import { paths } from '@/constants/paths';
 import { selectAuthenticatedUser } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/index';
 import { getProfilePath } from '@/utils/paths-utils';
@@ -14,7 +15,7 @@ export const SidebarMenu: React.FC = () => {
 
   const dynamicMenuLinks = useMemo(() => {
     return menuLinks.map((link) => {
-      if (link.label === 'Profile') {
+      if (link.to === paths.profile) {
         return {
           ...link,
           to: getProfilePath(uid),
@@ -27,13 +28,7 @@ export const SidebarMenu: React.FC = () => {
   return (
     <SidebarMenuStyled>
       {dynamicMenuLinks.map((link) => (
-        <SidebarMenuItem
-          key={link.label}
-          to={link.to}
-          iconOutline={link.iconOutline}
-          iconFill={link.iconFill}
-          label={link.label}
-        />
+        <SidebarMenuItem key={link.label} {...link} />
       ))}
     </SidebarMenuStyled>
   );

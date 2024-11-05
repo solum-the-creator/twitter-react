@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const RemoveButtonStyled = styled.button`
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.colors.red};
   padding: 0.6rem;
   border-radius: 50%;
   cursor: pointer;
@@ -11,6 +11,6 @@ export const RemoveButtonStyled = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: ${({ theme }) => theme.colors.redHover};
   }
 `;

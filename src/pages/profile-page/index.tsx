@@ -39,6 +39,14 @@ export const ProfilePage: React.FC = () => {
 
   const tweetsLength = useMemo(() => tweets?.length || 0, [tweets]);
 
+  const handleOpenEditProfileModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseEditProfileModal = () => {
+    setOpenModal(false);
+  };
+
   if (isFetching) {
     return <CenteredLoader />;
   }
@@ -61,10 +69,10 @@ export const ProfilePage: React.FC = () => {
             telegramLink={userProfile.telegramLink}
             profileImage={userProfile.profileImage}
             isOwnProfile={isOwnProfile}
-            onEditProfile={() => setOpenModal(true)}
+            onEditProfile={handleOpenEditProfileModal}
           />
           {isOwnProfile && (
-            <Modal isOpen={openModal} onClose={() => setOpenModal(false)} header="Edit profile">
+            <Modal isOpen={openModal} onClose={handleCloseEditProfileModal} header="Edit profile">
               <EditProfileForm
                 uid={userId}
                 initialValues={userProfile}

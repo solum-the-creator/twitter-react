@@ -54,7 +54,7 @@ export const EditProfileCover: React.FC<EditProfileCoverProps> = ({ coverUrl, on
 
   return (
     <CoverContainer>
-      {coverImage && <CoverPreview src={coverImage} alt="Profile Cover" />}
+      {coverImage && <CoverPreview src={coverImage} />}
       <CoverActions>
         <label htmlFor="coverInput">
           <CoverButton>

@@ -50,9 +50,9 @@ export const TweetItem: React.FC<TweetItemProps> = ({
   userId,
   timestamp,
 }) => {
+  const dispatch = useAppDispatch();
   const { uid: authUserId } = useAppSelector(selectAuthenticatedUser);
 
-  const dispatch = useAppDispatch();
   const { data: userProfile, isLoading } = useGetProfileQuery(userId);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);

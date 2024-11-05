@@ -16,12 +16,12 @@ export const SidebarProfile: React.FC = () => {
     navigate(getProfilePath(uid));
   };
 
+  const name = userProfile?.name || '';
+  const profileImg = userProfile?.profileImage || defaultProfile;
+
   if (isLoading) {
     return <CenteredLoader />;
   }
-
-  const name = userProfile?.name || '';
-  const profileImg = userProfile?.profileImage || defaultProfile;
 
   return (
     <ProfileContainer onClick={onClick}>
