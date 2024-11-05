@@ -34,6 +34,7 @@ export const Details = styled.div`
 export const UserName = styled.h2`
   font-size: 1.5rem;
   font-weight: 700;
+  color: ${({ theme }) => theme.colors.primaryText};
   font-family: 'Roboto Serif', serif;
 `;
 

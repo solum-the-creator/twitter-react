@@ -26,7 +26,7 @@ export const CoverActions = styled.div`
 `;
 
 export const CoverButton = styled.div`
-  background-color: rgba(230, 230, 230, 0.7);
+  background-color: ${({ theme }) => theme.colors.primary};
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;

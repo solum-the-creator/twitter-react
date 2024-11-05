@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useTheme } from 'styled-components';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { allowedFormats, maxImageSizeMB } from '@/constants/tweets';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
-import { theme } from '@/styles/theme';
 
 import { RemoveButton } from '../ui/remove-button';
 
@@ -17,6 +17,7 @@ type EditProfileCoverProps = {
 
 export const EditProfileCover: React.FC<EditProfileCoverProps> = ({ coverUrl, onFileSelect }) => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const [coverImage, setCoverImage] = useState<string | undefined>(coverUrl);
 
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {

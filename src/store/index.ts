@@ -6,6 +6,7 @@ import { authApi } from '@/store/auth/authApi';
 import authSLice from '@/store/auth/authSlice';
 import notificationSlice from '@/store/notification/notificationSlice';
 import { profileApi } from '@/store/profile/profileApi';
+import themeSlice from '@/store/theme/themeSlice';
 import { tweetsApi } from '@/store/tweets/tweetsApi';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   [profileApi.reducerPath]: profileApi.reducer,
   [tweetsApi.reducerPath]: tweetsApi.reducer,
   auth: authSLice,
+  theme: themeSlice,
   notification: notificationSlice,
 });
 

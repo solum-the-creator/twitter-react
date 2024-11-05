@@ -6,6 +6,8 @@ import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useToggleLikeTweetMutation } from '@/store/tweets/tweetsApi';
 
+import { IconWrapper } from '../ui/icon-wrapper';
+
 import { LikeButton, LikeCount, LikeWrapper } from './like.styled';
 
 type LikeProps = {
@@ -39,7 +41,9 @@ export const Like: React.FC<LikeProps> = ({ tweetId, userId, isLiked, count }) =
 
   return (
     <LikeWrapper>
-      <LikeButton onClick={handleLike}>{localIsLiked ? <LikeFillIcon /> : <LikeIcon />}</LikeButton>
+      <LikeButton onClick={handleLike}>
+        <IconWrapper icon={localIsLiked ? LikeFillIcon : LikeIcon} />
+      </LikeButton>
       <LikeCount>{localCount}</LikeCount>
     </LikeWrapper>
   );

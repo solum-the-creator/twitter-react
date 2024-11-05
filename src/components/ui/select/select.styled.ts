@@ -32,6 +32,7 @@ export const StyledSelect = styled.select<{ $hasError: boolean }>`
 
 export const StyledOption = styled.option`
   color: ${({ theme }) => theme.colors.primaryText};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   &:disabled {
     color: ${({ theme }) => theme.colors.primaryTextDisabled};
@@ -41,11 +42,11 @@ export const StyledOption = styled.option`
 export const Label = styled.label`
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  color: #333;
+  color: ${({ theme }) => theme.colors.primaryText};
 `;
 
 export const ErrorText = styled.span<{ $hasError: boolean }>`
-  color: red;
+  color: ${({ theme }) => theme.colors.error};
   font-size: 0.8rem;
   margin-top: 0.25rem;
   height: 1rem;

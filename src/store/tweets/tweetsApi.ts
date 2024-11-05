@@ -130,7 +130,6 @@ export const tweetsApi = createApi({
           return { error: { message: 'An unexpected error occurred while toggling the like.' } };
         }
       },
-      invalidatesTags: [{ type: 'Tweet', id: 'LIST' }],
     }),
   }),
 });

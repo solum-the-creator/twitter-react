@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useTheme } from 'styled-components';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { allowedFormats, maxImageSizeMB } from '@/constants/tweets';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
-import { theme } from '@/styles/theme';
 
 import { ProfileImage } from '../ui/profile-image';
 
@@ -17,6 +17,7 @@ type EditProfileImageProps = {
 
 export const EditProfileImage: React.FC<EditProfileImageProps> = ({ profileUrl, onFileSelect }) => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const [avatarImage, setAvatarImage] = useState<string | undefined>(profileUrl);
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

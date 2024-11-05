@@ -14,6 +14,7 @@ export const SearchInput = styled.input`
   border: none;
   border-radius: 2rem;
   background-color: ${({ theme }) => theme.colors.backgroundGrayLight};
+  color: ${({ theme }) => theme.colors.primaryText};
   outline: none;
 
   &::placeholder {

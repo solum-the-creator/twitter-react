@@ -7,6 +7,7 @@ export const Container = styled.div`
   min-height: 100vh;
 
   color: ${({ theme }) => theme.colors.primaryText};
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ContentContainer = styled.div`

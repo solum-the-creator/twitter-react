@@ -35,6 +35,8 @@ export const ProfileTweets = styled.div`
   font-size: 1.125rem;
   font-weight: 700;
 
+  color: ${({ theme }) => theme.colors.primaryText};
+
   border-bottom: 1px solid ${({ theme }) => theme.colors.stroke};
 `;
 

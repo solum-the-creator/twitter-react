@@ -15,6 +15,7 @@ import { ImagesPreview } from '../images-preview';
 import { Like } from '../like';
 import { TweetBox } from '../tweet-box';
 import { TweetPopup } from '../tweet-popup';
+import { IconWrapper } from '../ui/icon-wrapper';
 import { Link } from '../ui/link';
 import { ProfileImage } from '../ui/profile-image';
 
@@ -120,7 +121,7 @@ export const TweetItem: React.FC<TweetItemProps> = ({
           {authUserId === userId && (
             <ActionsWrapper>
               <ActionButton onClick={togglePopup}>
-                <MoreIcon />
+                <IconWrapper icon={MoreIcon} />
               </ActionButton>
               <TweetPopup isOpen={isPopupOpen} onClose={togglePopup} onDelete={handleDelete} />
             </ActionsWrapper>

@@ -11,7 +11,7 @@ export const MenuItemWrapper = styled.div`
   transition: background-color 0.2s ease-in-out;
 `;
 
-export const IconWrapper = styled.div`
+export const IconContainer = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   display: flex;

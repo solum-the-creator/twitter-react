@@ -7,3 +7,9 @@ export const TweetsLoader = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.primaryText};
+`;

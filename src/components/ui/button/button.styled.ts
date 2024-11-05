@@ -19,7 +19,7 @@ const variantStyles = {
   `,
   secondary: css`
     background-color: ${({ theme }) => theme.colors.backgroundGray};
-    color: #0f1419;
+    color: ${({ theme }) => theme.colors.primaryText};
     border: none;
 
     &:hover {

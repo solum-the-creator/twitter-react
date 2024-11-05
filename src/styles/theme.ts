@@ -1,4 +1,4 @@
-export const theme = {
+export const lightTheme = {
   colors: {
     primaryText: '#000000',
     primaryTextDisabled: '#00000080',
@@ -25,6 +25,9 @@ export const theme = {
     red: '#EF1C5C',
     redHover: '#F4B4C7',
   },
+  shadow: {
+    default: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+  },
   notification: {
     backgroundColor: {
       error: '#F21D1D',
@@ -47,4 +50,56 @@ export const theme = {
   },
 };
 
-export type Theme = typeof theme;
+export const darkTheme = {
+  colors: {
+    primaryText: '#E1E8ED',
+    primaryTextDisabled: '#E1E8ED80',
+    primary: '#15202B',
+    secondary: '#1A2836',
+    secondaryText: '#8899A6',
+    backgroundGray: '#536472',
+    backgroundGrayDark: '#33424E',
+    backgroundGrayLight: '#253341',
+    backgroundGrayLighter: '#1C2733',
+    accent: '#1DA1F2',
+    accentHover: '#0C84D2',
+    accentActive: '#0A74B3',
+    accentText: '#1DA1F2',
+    accentDisabled: '#3A657F',
+    stroke: '#38444D',
+    strokeDark: '#22303C',
+    error: '#E0245E',
+    errorText: '#E0245E',
+    success: '#4CAF50',
+    successText: '#4CAF50',
+    placeholder: '#8899A6',
+    backdrop: '#0F141980',
+    red: '#E0245E',
+    redHover: '#F5629A',
+  },
+  shadow: {
+    default: '0px 4px 8px rgba(60, 80, 100, 0.3)',
+  },
+  notification: {
+    backgroundColor: {
+      error: '#E0245E',
+      success: '#4CAF50',
+      info: '#1DA1F2',
+      warning: '#FFAD1F',
+    },
+    color: {
+      error: '#E0245E',
+      success: '#4CAF50',
+      info: '#1DA1F2',
+      warning: '#FFAD1F',
+    },
+    shadow: {
+      error: '#9E1A47',
+      success: '#357B3A',
+      info: '#147BB7',
+      warning: '#B57D1B',
+    },
+  },
+};
+
+export type Theme = typeof lightTheme;

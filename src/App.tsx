@@ -1,37 +1,22 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-import { AuthRoute } from '@/components/routes/auth-route';
-import { UnauthRoute } from '@/components/routes/unauth-route';
-import { useAuthListener } from '@/hooks/use-auth-listener';
-import { HomePage } from '@/pages/home-page';
-import { LoginPage } from '@/pages/login-page';
-import { RootPage } from '@/pages/root-page';
-import { SignUpPage } from '@/pages/sign-up-page';
-
-import { MainLayout } from './components/layout/main-layout';
-import { paths } from './constants/paths';
-import { ProfilePage } from './pages/profile-page';
+import { ToastList } from './components/toast/toast-list';
+import { selectTheme } from './store/theme/themeSelectors';
+import GlobalStyles from './styles/global';
+import { darkTheme, lightTheme } from './styles/theme';
+import { Router } from './router';
+import { useAppSelector } from './store';
 
 const App: React.FC = () => {
-  useAuthListener();
+  const themeMode = useAppSelector(selectTheme);
+  const theme = themeMode === 'light' ? lightTheme : darkTheme;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AuthRoute />}>
-          <Route element={<MainLayout />}>
-            <Route path={paths.profile} element={<ProfilePage />} />
-            <Route path={paths.home} element={<HomePage />} />
-            <Route path="*" element={<Navigate to={paths.home} replace={true} />} />
-          </Route>
-        </Route>
-        <Route element={<UnauthRoute />}>
-          <Route path={paths.signUp} element={<SignUpPage />} />
-          <Route path={paths.login} element={<LoginPage />} />
-          <Route path={paths.root} element={<RootPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Router />
+      <ToastList />
+    </ThemeProvider>
   );
 };
 

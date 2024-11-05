@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { CenteredLoader } from '@/components/centered-loader';
+import { Header } from '@/components/header';
+import { ToggleTheme } from '@/components/toggle-theme';
 import { TweetBox } from '@/components/tweet-box';
 import { TweetForm } from '@/components/tweet-form';
 import { TweetItem } from '@/components/tweet-item';
 import { useLazyGetPaginatedTweetsQuery } from '@/store/tweets/tweetsApi';
 
-import { TweetsLoader } from './home-page.styled';
+import { Title, TweetsLoader } from './home-page.styled';
 
 export const HomePage: React.FC = () => {
   const [fetchTweets, { data: tweetsData, isFetching }] = useLazyGetPaginatedTweetsQuery();
@@ -48,6 +50,10 @@ export const HomePage: React.FC = () => {
 
   return (
     <div>
+      <Header>
+        <Title>Home</Title>
+        <ToggleTheme />
+      </Header>
       <TweetBox>
         <TweetForm />
       </TweetBox>

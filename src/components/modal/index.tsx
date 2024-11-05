@@ -5,6 +5,8 @@ import CloseIcon from '@/assets/images/icons/close-icon.svg?react';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { useHideOverflow } from '@/hooks/use-hide-overflow';
 
+import { IconWrapper } from '../ui/icon-wrapper';
+
 import { Backdrop, CloseButton, Container, ModalContent, ModalHeader, ModalWrapper } from './modal.styled';
 
 type ModalProps = {
@@ -30,7 +32,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, children, header, onClose 
       <ModalWrapper ref={modalRef}>
         <ModalHeader>
           <CloseButton onClick={onClose}>
-            <CloseIcon />
+            <IconWrapper icon={CloseIcon} size={16} />
           </CloseButton>
           {header}
         </ModalHeader>

@@ -1,4 +1,5 @@
 import { useId, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
 
 import ImageIcon from '@/assets/images/icons/image-icon.svg?react';
 import { allowedFormats, maxImageCount, maxImageSizeMB, tweetLength } from '@/constants/tweets';
@@ -6,7 +7,6 @@ import { useGetAuthProfile } from '@/hooks/use-get-auth-profile';
 import { useAppDispatch } from '@/store/index';
 import { addNotification } from '@/store/notification/notificationSlice';
 import { useAddTweetMutation } from '@/store/tweets/tweetsApi';
-import { theme } from '@/styles/theme';
 import { TweetResponse } from '@/types/tweet';
 import { validateFiles } from '@/utils/file-validations-utils';
 
@@ -34,6 +34,7 @@ type TweetFormProps = {
 
 export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const { userProfile } = useGetAuthProfile();
 
   const [content, setContent] = useState('');

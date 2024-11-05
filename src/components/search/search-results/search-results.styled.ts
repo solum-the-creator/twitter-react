@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const SearchResultsContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.backgroundGrayLight};
+  color: ${({ theme }) => theme.colors.primaryText};
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
