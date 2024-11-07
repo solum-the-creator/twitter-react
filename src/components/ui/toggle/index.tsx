@@ -11,7 +11,7 @@ export const Toggle: React.FC<ToggleProps> = ({ checked, onChange }) => {
   };
 
   return (
-    <ToggleContainer>
+    <ToggleContainer role="checkbox" aria-checked={checked}>
       <ToggleInput type="checkbox" checked={checked} onChange={handleToggle} />
       <ToggleSlider $checked={checked} />
     </ToggleContainer>
