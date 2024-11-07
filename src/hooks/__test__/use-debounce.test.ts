@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act } from 'react';
+import { renderHook } from '@testing-library/react';
 
 import { useDebounce } from '../use-debounce';
 
@@ -38,6 +39,7 @@ describe('useDebounce', () => {
     });
 
     rerender({ value: 'first update' });
+
     act(() => {
       vi.advanceTimersByTime(300);
     });
@@ -45,6 +47,7 @@ describe('useDebounce', () => {
     expect(result.current).toBe('initial');
 
     rerender({ value: 'second update' });
+
     act(() => {
       vi.advanceTimersByTime(500);
     });

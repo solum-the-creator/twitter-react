@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 import { useHideOverflow } from '../use-hide-overflow';
 
@@ -12,12 +12,16 @@ describe('useHideOverflow', () => {
   });
 
   it('sets overflow to hidden when isOpen is true', () => {
-    renderHook(() => useHideOverflow(true));
+    renderHook(({ isOpen }) => useHideOverflow(isOpen), {
+      initialProps: { isOpen: true },
+    });
     expect(document.body.style.overflow).toBe('hidden');
   });
 
   it('sets overflow to unset when isOpen is false', () => {
-    renderHook(() => useHideOverflow(false));
+    renderHook(({ isOpen }) => useHideOverflow(isOpen), {
+      initialProps: { isOpen: false },
+    });
     expect(document.body.style.overflow).toBe('unset');
   });
 
