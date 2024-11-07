@@ -9,7 +9,13 @@ export default mergeConfig(
       globals: true,
       environment: 'jsdom',
       setupFiles: './tests/setup.ts',
-      include: ['**/*.test.tsx'],
+      include: ['**/*.test.tsx', '**/*.test.ts'],
+
+      coverage: {
+        provider: 'v8',
+        reportsDirectory: './coverage',
+        reporter: ['text', 'json', 'html'],
+      },
     },
   }),
 );
