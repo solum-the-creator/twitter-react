@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 export const login = (email: string, password: string) => {
   cy.visit('/');
   cy.contains('Already have an account?').should('be.visible');

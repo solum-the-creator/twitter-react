@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import { logout } from './helpers/auth-helpers';
 
 describe('Sign Up Module e2e tests', () => {

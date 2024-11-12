@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import { login, logout } from './helpers/auth-helpers';
 
 describe('Tweet Creation Module e2e tests', () => {
