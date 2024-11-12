@@ -4,7 +4,7 @@ import { LoadingSpinner } from '../loading-spinner';
 
 import { IconSpan, StyledButton } from './button.styled';
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
@@ -26,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
   type = 'button',
   disabled = false,
   fullWidth = false,
+  ...props
 }) => {
   return (
     <StyledButton
@@ -34,7 +35,8 @@ export const Button: React.FC<ButtonProps> = ({
       $fullWidth={fullWidth}
       $size={size}
       disabled={disabled || isLoading}
-      onClick={onClick}>
+      onClick={onClick}
+      {...props}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (

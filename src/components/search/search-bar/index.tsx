@@ -14,7 +14,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
 
   return (
     <SearchBarContainer>
-      <SearchInput type="text" placeholder="Search User" value={value} onChange={handleSearch} />
+      <SearchInput
+        type="text"
+        placeholder="Search User"
+        value={value}
+        onChange={handleSearch}
+        data-testid="search-input"
+      />
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

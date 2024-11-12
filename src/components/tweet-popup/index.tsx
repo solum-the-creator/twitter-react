@@ -51,6 +51,7 @@ export const TweetPopup: React.FC<TweetPopupProps> = ({ isOpen, onClose, onDelet
         onClose={handleConfirmClose}
         onConfirm={handleConfirm}
         header="Delete Tweet"
+        confirmText="Delete Tweet"
         text="This action cannot be undone and the post will be permanently removed from your profile, all your readers' feeds and search results."
       />
     </PopupWrapper>

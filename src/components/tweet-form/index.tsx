@@ -111,7 +111,7 @@ export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <TweetFormWrapper>
+    <TweetFormWrapper data-testid="tweet-form">
       <UserImageWrapper>
         <ProfileImage size={48} src={userProfile?.profileImage} alt={userProfile?.name} />
       </UserImageWrapper>
@@ -122,6 +122,7 @@ export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
           value={content}
           rows={3}
           placeholder="What's happening?!"
+          data-testid="tweet-input"
         />
 
         {selectedImages.length > 0 && (
@@ -155,7 +156,8 @@ export const TweetForm: React.FC<TweetFormProps> = ({ onSuccess }) => {
                 fullWidth={true}
                 isLoading={isTweetAdding}
                 disabled={tweetDisabled}
-                onClick={handleTweetSubmit}>
+                onClick={handleTweetSubmit}
+                data-testid="tweet-submit-button">
                 Tweet
               </Button>
             </TweetButtonWrapper>

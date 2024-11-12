@@ -11,6 +11,7 @@ import {
   Follows,
   FollowsCount,
   ProfileImageWrapper,
+  Telegram,
   TopBio,
   UserName,
 } from './profile.styled';
@@ -42,17 +43,19 @@ export const ProfileBio: React.FC<ProfileBioProps> = ({
         </ProfileImageWrapper>
         {isOwnProfile && (
           <ActionsWrapper>
-            <Button variant="outline" size="small" onClick={onEditProfile}>
+            <Button variant="outline" size="small" onClick={onEditProfile} data-testid="edit-profile-button">
               Edit profile
             </Button>
           </ActionsWrapper>
         )}
       </TopBio>
       <Details>
-        <UserName>{name}</UserName>
-        <Email>{email}</Email>
-        {telegramLink && <Link to={telegramLink}>{telegramLink}</Link>}
-        <Bio>{bio}</Bio>
+        <UserName data-testid="profile-name">{name}</UserName>
+        <Email data-testid="profile-email">{email}</Email>
+        <Telegram data-testid="profile-telegram">
+          {telegramLink && <Link to={telegramLink}>{telegramLink}</Link>}
+        </Telegram>
+        <Bio data-testid="profile-bio">{bio}</Bio>
 
         <Follows>
           <div>

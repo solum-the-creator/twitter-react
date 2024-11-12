@@ -120,7 +120,7 @@ export const TweetItem: React.FC<TweetItemProps> = ({
 
           {authUserId === userId && (
             <ActionsWrapper>
-              <ActionButton onClick={togglePopup}>
+              <ActionButton onClick={togglePopup} data-testid="delete-tweet-button">
                 <IconWrapper icon={MoreIcon} />
               </ActionButton>
               <TweetPopup isOpen={isPopupOpen} onClose={togglePopup} onDelete={handleDelete} />

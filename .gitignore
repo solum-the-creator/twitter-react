@@ -14,6 +14,7 @@ dist-ssr
 *.lock
 bun.lockb
 .env
+.env.test
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +26,5 @@ bun.lockb
 *.njsproj
 *.sln
 *.sw?
+
+service-account.json

@@ -81,7 +81,12 @@ export const Sidebar: React.FC = () => {
       <BottomSection>
         <SidebarProfile />
         <ButtonWrapper>
-          <Button variant="secondary" onClick={handleLogoutOpen} isLoading={isLoading} fullWidth={true}>
+          <Button
+            variant="secondary"
+            onClick={handleLogoutOpen}
+            isLoading={isLoading}
+            fullWidth={true}
+            data-testid="logout-button">
             <ButtonIconWrapper>
               <IconWrapper icon={LogoutIcon} />
             </ButtonIconWrapper>

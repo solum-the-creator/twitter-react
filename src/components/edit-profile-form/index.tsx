@@ -73,7 +73,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
   };
 
   return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer onSubmit={handleSubmit(onSubmit)} data-testid="edit-profile-form">
       <CoverImageWrapper>
         <EditProfileCover onFileSelect={handleCoverSelect} coverUrl={initialValues.coverImage} />
       </CoverImageWrapper>
@@ -90,6 +90,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           fullWidth={true}
           {...register('name')}
           error={errors.name?.message}
+          data-testid="input-name"
         />
 
         <Input
@@ -99,6 +100,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           fullWidth={true}
           {...register('telegramLink')}
           error={errors.telegramLink?.message}
+          data-testid="input-telegram"
         />
 
         <TextArea
@@ -107,6 +109,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           fullWidth={true}
           {...register('bio')}
           error={errors.bio?.message}
+          data-testid="input-bio"
         />
 
         <FormSubtitle>Change password</FormSubtitle>
@@ -128,7 +131,7 @@ export const EditProfileForm: React.FC<EditProfileFormProps> = ({ uid, initialVa
           error={errors.confirmPassword?.message}
         />
 
-        <Button type="submit" variant="primary" isLoading={isLoading}>
+        <Button type="submit" variant="primary" isLoading={isLoading} data-testid="submit-button">
           Save
         </Button>
       </FormControls>

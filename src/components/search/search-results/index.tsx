@@ -13,7 +13,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ users, isLoading }
   const isEmpty = users.length === 0;
 
   return (
-    <SearchResultsContainer>
+    <SearchResultsContainer data-testid="search-results">
       <ResultsHeader>Search Results</ResultsHeader>
       {isLoading ? (
         <CenteredLoader />

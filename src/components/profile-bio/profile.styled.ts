@@ -54,6 +54,12 @@ export const Bio = styled.p`
   word-break: break-word;
 `;
 
+export const Telegram = styled.p`
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  font-weight: 400;
+`;
+
 export const Follows = styled.div`
   display: flex;
   align-items: center;
