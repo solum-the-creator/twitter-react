@@ -38,6 +38,7 @@
       "@/*": ["./src/*"]
     }
   },
+  "include": ["src/**/*", "tests/**/*", "cypress/**/*"],
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
